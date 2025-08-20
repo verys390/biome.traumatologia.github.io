@@ -4,6 +4,9 @@
 html, body { overflow-x: hidden; }
 * { box-sizing: border-box; }
 img, video, picture, svg, canvas, iframe { max-width: 100%; height: auto; display: block; }
+body {
+  padding-top: 70px; /* desplaza todo el contenido hacia abajo */
+}
 
 /* =========================================================
    FONDOS / UTILIDADES
@@ -20,6 +23,14 @@ img, video, picture, svg, canvas, iframe { max-width: 100%; height: auto; displa
     linear-gradient(#fff,#fff) padding-box,
     linear-gradient(135deg,#a3d5ff,#00bfff) border-box;
   box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+.navbar-brand {
+  font-size: 1rem; /* más chico el texto del logo/título */
+  white-space: nowrap; /* evita que se corte en varias líneas */
+}
+
+.navbar-toggler {
+  padding: 0.25rem 0.5rem; /* hace más compacto el botón hamburguesa */
 }
 
 /* =========================================================
@@ -239,6 +250,10 @@ img, video, picture, svg, canvas, iframe { max-width: 100%; height: auto; displa
 @media (max-width: 992px){
   #bienestar .pro-grid{
     grid-template-columns: repeat(3, minmax(84px, 1fr));
+    
+  }
+  .navbar-brand {
+    font-size: 0.9rem;
   }
 }
 
