@@ -1,0 +1,272 @@
+/* =========================================================
+   BASE / RESET
+========================================================= */
+html, body { overflow-x: hidden; }
+* { box-sizing: border-box; }
+img, video, picture, svg, canvas, iframe { max-width: 100%; height: auto; display: block; }
+
+/* =========================================================
+   FONDOS / UTILIDADES
+========================================================= */
+.bg-sky-x{
+  background: linear-gradient(90deg,#eaf3ff 0%,#ffffff 45%,#dfe9ff 100%);
+}
+
+/* Foto consultorio con “borde” degradé */
+.foto-consultorio{
+  width:280px; height:280px; border-radius:50%; object-fit:cover;
+  padding:6px; border:6px solid transparent;
+  background:
+    linear-gradient(#fff,#fff) padding-box,
+    linear-gradient(135deg,#a3d5ff,#00bfff) border-box;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+/* =========================================================
+   CARDS DE PATOLOGÍAS
+========================================================= */
+.cards-row{ row-gap:1.25rem; column-gap:1.25rem; }
+
+.card.equal{
+  display:flex; flex-direction:column;
+  height:360px; max-width:360px; margin:0 auto;
+}
+.card.equal .card-img-top{ height:160px; object-fit:cover; }
+.card.equal .card-body{ flex:1 1 auto; display:flex; flex-direction:column; }
+
+/* Texto acotado a 3 líneas (solo prefijo webkit compatible) */
+.card.equal .card-text{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  line-clamp:3;
+  /* line-clamp:3;  <- eliminado para evitar advertencias */
+}
+
+/* Footer siempre abajo */
+.card.equal .card-footer, .card.equal .btn{ margin-top:auto; }
+
+/* =========================================================
+   MODALES ARMONIZADAS (Patologías, Bienestar)
+========================================================= */
+.modal.biome-modal .modal-content{
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 14px 40px rgba(15,23,42,.22);
+}
+.modal.biome-modal .modal-header{
+  border:0;
+  padding:1rem 1.25rem;
+}
+.modal.biome-modal .modal-title{
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.modal.biome-modal .btn-close{
+  filter:invert(.15);
+  opacity:.9;
+}
+.modal.biome-modal .btn-close:hover{ opacity:1; }
+.modal.biome-modal .modal-body{
+  padding:1rem 1.25rem;
+  overflow:auto; /* por si el contenido es largo */
+}
+.modal.biome-modal .modal-footer{
+  border:0;
+  padding:0 1.25rem 1.25rem;
+  background:transparent;
+  justify-content:flex-end;
+  gap:.5rem;
+}
+
+/* Backdrop consistente (fallback sólido) */
+.modal-backdrop.show{
+  background-color:rgba(15,23,42,.55);
+}
+/* Si hay soporte, aplicamos blur y suavizamos el color */
+@supports (backdrop-filter: blur(2px)){
+  .modal-backdrop.show{
+    backdrop-filter: blur(2px);
+    background-color:rgba(15,23,42,.45);
+  }
+}
+
+/* Imágenes en modales informativas */
+.modal.biome-modal img{
+  max-width:50%;
+  max-height:250px;
+  object-fit:contain;
+  margin:0 auto;
+}
+
+/* =========================================================
+   BIENESTAR / PROFESIONALES – Cards e Íconos
+========================================================= */
+.card.pro .pro-thumb{
+  height:160px; display:grid; place-items:center;
+  color:#fff; font-size:2rem;
+  background:linear-gradient(135deg,#9bbcff,#6aa1ff);
+}
+.card.pro .pro-thumb i{ filter:drop-shadow(0 6px 16px rgba(0,0,0,.28)); }
+
+/* Paletas */
+.pro-thumb.t-sky   { background:linear-gradient(135deg,#b1d6ff,#6bbcff); }
+.pro-thumb.t-green { background:linear-gradient(135deg,#b2f1da,#5dd7a9); }
+.pro-thumb.t-violet{ background:linear-gradient(135deg,#d4c4ff,#9e83ff); }
+.pro-thumb.t-amber { background:linear-gradient(135deg,#ffe0a3,#ffc169); color:#263238; }
+.pro-thumb.t-blue  { background:linear-gradient(135deg,#b3e5ff,#58b9ff); }
+.pro-thumb.t-slate { background:linear-gradient(135deg,#c9d4e6,#7d8aa1); }
+
+/* Grid de iconos */
+#bienestar .pro-grid{
+  display:grid;
+  grid-template-columns:repeat(6, minmax(72px, 1fr));
+  gap:1.25rem;
+  justify-items:center; /* centra las celdas en todas las vistas */
+}
+
+/* Íconos redondos con fallback */
+#bienestar .pro-icon{
+  border:none; background:transparent; padding:0;
+  display:grid; place-items:center;
+
+  /* Fallback fijo si no hay aspect-ratio */
+  width:110px; height:110px;
+
+  /* Ratio moderno */
+  width:clamp(110px, 14vw, 140px);
+  aspect-ratio:1 / 1;
+  border-radius:999px;
+  box-shadow:0 10px 26px rgba(15,23,42,.12);
+  transition:transform .15s ease, box-shadow .15s ease;
+  margin-inline:auto; /* centrado horizontal del botón/icono */
+}
+#bienestar .pro-icon img{
+  width:100%; height:100%; object-fit:contain; border:0;
+}
+#bienestar .pro-icon:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 36px rgba(15,23,42,.18);
+}
+
+/* Accesibilidad: sin color-mix, color sólido */
+#bienestar .pro-icon:focus-visible{
+  outline:3px solid var(--bs-primary);
+  outline-offset:4px;
+}
+
+/* Logo BIOME */
+.biome-logo{
+  width:clamp(48px, 7vw, 80px);
+  height:auto;
+  object-fit:contain;
+  border-radius:8px; background:#ffffff;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+
+/* =========================================================
+   FAB WhatsApp azul (flotante)
+========================================================= */
+.wa-fab{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 68px;
+  height: 68px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--bs-primary);  /* tu azul Bootstrap */
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(15,23,42,.22);
+  z-index: 1060;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.wa-fab i{ font-size: 1.6rem; line-height: 1; }
+.wa-fab:hover{ transform: translateY(-3px); box-shadow: 0 16px 36px rgba(15,23,42,.28); color:#fff; }
+.wa-fab:focus-visible{ outline: 3px solid rgba(255,255,255,.95); outline-offset: 4px; }
+.modal-open .wa-fab{ display:none; } /* no tapar los modales */
+
+/* Preferencia de reducción de movimiento */
+@media (prefers-reduced-motion: reduce){
+  .wa-fab{ transition: none; }
+}
+
+/* =========================================================
+   FOOTER (limpio y consistente)
+========================================================= */
+.site-footer .footer-nav .nav-link{
+  color: #6c757d; /* text-muted */
+  transition: color .15s ease;
+}
+.site-footer .footer-nav .nav-link:hover{ color:#0d6efd; }
+
+/* Badge MyloSoul */
+.ms-badge{
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.35rem .6rem; border-radius:999px;
+  background:#f8f9fa; border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.ms-badge:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+.ms-badge img{
+  width:36px; height:36px; object-fit:contain; border-radius:8px; background:#fff;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.12));
+}
+.ms-badge .ms-name{
+  font-weight:600; letter-spacing:.02em; line-height:1; color:#0d6efd;
+}
+
+/* =========================================================
+   FALLBACKS @supports (para navegadores viejos)
+========================================================= */
+@supports not (aspect-ratio: 1 / 1){
+  #bienestar .pro-icon{ width:110px; height:110px; }
+}
+
+/* =========================================================
+   MEDIA QUERIES (RESPONSIVE)
+========================================================= */
+
+/* <= 992px (tablet) */
+@media (max-width: 992px){
+  #bienestar .pro-grid{
+    grid-template-columns: repeat(3, minmax(84px, 1fr));
+  }
+}
+
+/* <= 576px (móvil) — unificado */
+@media (max-width: 576px){
+  /* FAB WhatsApp */
+  .wa-fab{
+    right: 14px;
+    bottom: 14px;
+    width: 60px;
+    height: 60px;
+  }
+  .wa-fab i{ font-size: 1.4rem; }
+
+  /* Footer orden y centrado */
+  .site-footer .footer-nav{ order:2; }
+  .site-footer .ms-badge{ order:3; margin-inline:auto; }
+  .site-footer p{ order:1; }
+
+  /* Cards y grilla de Bienestar */
+  .card.equal{ height: 400px; max-width: 100%; }
+  #bienestar .pro-grid{
+    grid-template-columns: repeat(2, minmax(110px, 1fr));
+  }
+}
+
+/* <= 390px (móvil muy chico) */
+@media (max-width: 390px){
+  .modal.biome-modal .modal-title{ font-size: 1rem; }
+  .modal.biome-modal .modal-dialog{ margin: .75rem; }
+}
