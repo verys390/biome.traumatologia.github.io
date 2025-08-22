@@ -9,28 +9,44 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Sección: Patologías -->
+  <!-- Sección: Sobre mí -->
+  <url>
+    <loc>https://verys390.github.io/biome.traumatologia.github.io/#sobre-mi</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Sección: Patologías (clave para SEO) -->
   <url>
     <loc>https://verys390.github.io/biome.traumatologia.github.io/#patologias</loc>
     <lastmod>2025-08-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 
-  <!-- Sección: Terapias -->
+  <!-- Sección: Terapias asociadas -->
   <url>
     <loc>https://verys390.github.io/biome.traumatologia.github.io/#terapias</loc>
     <lastmod>2025-08-22</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Sección: Reflexión (si la tenés en la one-page) -->
+  <url>
+    <loc>https://verys390.github.io/biome.traumatologia.github.io/#reflexion</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
-  <!-- Sección: Contacto -->
+  <!-- Sección: Contacto / Turnos -->
   <url>
     <loc>https://verys390.github.io/biome.traumatologia.github.io/#contacto</loc>
     <lastmod>2025-08-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
