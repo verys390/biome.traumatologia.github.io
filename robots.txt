@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://verys390.github.io/biome.traumatologia.github.io/sitemap.xml
