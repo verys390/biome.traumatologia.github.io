@@ -95,9 +95,14 @@
             <span class="badge rounded-pill text-bg-primary bg-opacity-75 fs-6 mb-3">
               “Equilibrio y bienestar físico y emocional”
             </span>
-            <p class="lead">
-              Te acompaño en el cuidado de tu cuerpo con un abordaje médico y educativo, adaptado a tus necesidades...
-            </p>
+         <p class="lead">
+            <strong>BIOME Traumatología</strong> es un espacio donde encontrarás información sobre 
+            <strong>fracturas, lesiones musculares y dolor articular</strong>, 
+            con un enfoque educativo en <strong>diagnóstico, prevención y tratamiento</strong>.  
+            Para quienes buscan un acompañamiento más personalizado, cuento con 
+            atención en <strong>CeDis consultorio de Saladillo</strong>, <strong>Pedí tu turno por WhatsApp</strong>.
+
+          </p>
 
             <div class="d-flex gap-2 align-items-center mb-2">
               <a class="btn text-bg-primary" id="ctaHero"
@@ -170,7 +175,11 @@
     <div class="container">
       <div class="text-center mb-4">
         <h2>Patologías y educación</h2>
-        <p class="text-muted">Elegí una <strong>región</strong>. Al tocarla se despliegan sus fichas; cada ficha abre un detalle con acciones.</p>
+        <p class="text-muted">
+            Explorá por <strong>región</strong>: seleccioná la que te interese, hacé clic en la patología y luego en 
+            <strong>"Ver más"</strong> para acceder a su descripción y recomendaciones.
+          </p>
+
       </div>
       <div class="accordion accordion-flush" id="accPatos">
         <!-- Fracturas frecuentes -->
@@ -441,23 +450,32 @@
     <!-- Modal reutilizable de Patologías -->
     <!-- Modal Patologías -->
 <div class="modal fade biome-modal" id="patoModal" tabindex="-1" aria-labelledby="patoTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="patoTitle"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
+
       <div class="modal-body">
         <img class="img-fluid rounded mb-3" id="patoImg" alt="">
         <div id="patoContenido"></div>
       </div>
-      <div class="modal-footer">
-        <a id="btnInsta" class="btn btn-outline-primary" target="_blank" rel="noopener">
-          <i class="fa-brands fa-instagram me-2" aria-hidden="true"></i>Más info en Instagram
-        </a>
-        <a id="btnPatoTurno" class="btn btn-primary" target="_blank" rel="noopener">
-          <i class="fa-solid fa-calendar-check me-2" aria-hidden="true"></i>Sacar turno
-        </a>
+
+      <div class="modal-footer d-flex justify-content-between">
+        <!-- Botón Volver -->
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          <i class="fa-solid fa-arrow-left me-2"></i>Volver
+        </button>
+
+        <div class="d-flex gap-2">
+          <a id="btnInsta" class="btn btn-outline-primary" target="_blank" rel="noopener">
+            <i class="fa-brands fa-instagram me-2"></i>Más info en Instagram
+          </a>
+          <a id="btnPatoTurno" class="btn btn-primary" target="_blank" rel="noopener">
+            <i class="fa-solid fa-calendar-check me-2"></i>Sacar turno
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -471,7 +489,10 @@
     <div class="container">
       <div class="text-center mb-4">
         <h2>Terapias asociadas</h2>
-        <p class="text-muted">Informate sobre cada una y cómo puede ayudarte.</p>
+        <p class="text-muted">
+          Descubrí cómo cada especialidad puede ayudarte en tu recuperación. 
+          Hacé clic en los íconos para ver más información.
+        </p>
       </div>
 
       <!-- Grid de íconos -->
@@ -498,25 +519,41 @@
     </div>
 
     <!-- Modal de Bienestar -->
-    <div class="modal fade" id="proModal" tabindex="-1" aria-hidden="true" aria-labelledby="proTitle">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="proTitle">Bienestar y profesionales</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            <div id="proContenido"></div>
-          </div>
-          <div class="modal-footer">
-            <a id="btnProTurno" class="btn btn-primary" target="_blank" rel="noopener">
-              <i class="fa-solid fa-calendar-check me-2" aria-hidden="true"></i>Sacar turno
-            </a>
-          </div>
+   <!-- MODAL: Bienestar y profesionales -->
+<div class="modal fade" id="proModal" tabindex="-1" aria-labelledby="proTitle" aria-hidden="true" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="proTitle">Bienestar y profesionales</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <div id="proContenido"></div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-between">
+        <!-- Botón Volver (cierra la modal) -->
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="fa-solid fa-arrow-left me-2"></i>Volver
+        </button>
+
+        <div class="d-flex gap-2">
+          <!-- Botón Más info (opcional, oculto si no se usa) -->
+          <a id="btnProInfo" class="btn btn-outline-primary d-none" target="_blank" rel="noopener">
+            <i class="fa-brands fa-instagram me-2"></i>Más info
+          </a>
+
+          <!-- Botón Sacar turno (WhatsApp u otra URL) -->
+          <a id="btnProTurno" class="btn btn-primary" target="_blank" rel="noopener" href="#">
+            <i class="fa-solid fa-calendar-check me-2"></i>Sacar turno
+          </a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
+</section>
 
   <!-- Reflexión emocional -->
   <section id="reflexion" class="py-5">
