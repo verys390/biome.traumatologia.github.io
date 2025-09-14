@@ -299,7 +299,7 @@ const PATOLOGIAS = {
     'Dolor muy intenso o traumatismo de alta energía'
   ],
   hacer: [
-    'Inmovilizar el tobillo bota walker y elevar el miembro; aplicar frío local intermitente',
+    'Inmovilizar el tobillo y elevar el miembro; aplicar frío local intermitente',
     'Evitar apoyar (muletas) hasta evaluación médica',
     'Acudir a guardia para radiografías; en casos complejos puede requerirse TAC',
     'El tratamiento depende del tipo: yeso/bota 6–8 semanas o cirugía (placas/tornillos) con rehabilitación posterior'
