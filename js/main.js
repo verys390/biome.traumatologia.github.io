@@ -402,6 +402,33 @@ const PATOLOGIAS = {
     consultar: ['Dolor persistente con limitación', 'Bloqueo doloroso o chasquidos persistentes', 'Fallo de manejo conservador o antecedente de trauma'],
     hacer: ['Movilidad evitando pinzamientos', 'Fortalecer glúteos y control lumbopélvico', 'Educación postural y adaptación de actividades; derivación si no progresa'],
   },
+  'esguince-tobillo': {
+  titulo: 'Esguince de tobillo (lateral)',
+  img: 'img/esguince-tobillo.jpg',
+  quees:
+    'Lesión de los ligamentos del tobillo (frecuente en inversión). Puede ser grado I–III según el estiramiento/rotura. Dolor, edema y a veces inestabilidad.',
+  sintomas: [
+    'Dolor lateral del tobillo',
+    'Hinchazón y hematomas',
+    'Dificultad para apoyar o caminar',
+    
+  ],
+  consultar: [
+    'Dolor intenso que impide apoyar o caminar 4 pasos',
+    'Deformidad marcada o sospecha de fractura',
+    'Dolor óseo en maléolos, base del 5º metatarsiano o navicular',
+    'Empeoramiento o nula mejoría en 48–72 h',
+    'Esguinces repetidos o sensación persistente de inestabilidad'
+  ],
+  hacer: [
+    'Reposo relativo, elevación y compresión elásticas; hielo 10–15 min cada 2–3 h (primeras 48 h)',
+    'Inmovilizar con bota whalker (2 semanas)',
+    ' Kinesiologia sin dolor (flexo-extensión, círculos suaves)',
+    'Propiocepción (equilibrio) y fortalecimiento de peroneos y glúteo medio',
+    'Vuelta gradual a deporte con tape o tobillera, sin dolor ni cojera'
+  ],
+},
+
 };
 
 /* =========================================================
