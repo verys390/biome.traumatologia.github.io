@@ -477,6 +477,31 @@ const PATOLOGIAS = {
     'Valoración quirúrgica en casos severos o con laxitud marcada que no responden al tratamiento'
   ],
 },
+'tendinitis-aquiles': {
+  titulo: 'Tendinitis del tendón de Aquiles',
+  img: 'img/tendinitis-aquiles.jpg',
+  quees:
+    'Inflamación aguda del tendón de Aquiles. Suele aparecer tras un esfuerzo intenso, sobrecarga o mal apoyo. Se diferencia de la tendinosis (degeneración crónica sin inflamación).',
+  sintomas: [
+    'Dolor agudo en la parte posterior del tobillo',
+    'Inflamación y calor local',
+    'Rigidez al levantarse',
+    'Dolor al caminar o correr'
+  ],
+  consultar: [
+    'Dolor que no mejora en 1–2 semanas con reposo relativo',
+    'Dificultad marcada para caminar o ponerse en puntas',
+    'Sospecha de rotura (chasquido, hundimiento, imposibilidad de elevar talón)',
+    'Antecedentes de tendinopatías o aumento brusco de carga'
+  ],
+  hacer: [
+    'Reposo relativo y crioterapia (hielo local) las primeras 48–72 h',
+    'Anti inflamatorios si corresponde, según indicación médica',
+    'Kinesiología: movilidad suave y progresión de ejercicios excéntricos',
+    'Calzado adecuado o taloneras; revisar técnica y superficie',
+    'Reeducación deportiva antes de retomar el impacto'
+  ],
+},
 
 
 };
