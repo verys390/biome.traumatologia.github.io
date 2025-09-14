@@ -452,6 +452,32 @@ const PATOLOGIAS = {
     'Vuelta gradual a deporte con tape o tobillera, sin dolor ni cojera'
   ],
 },
+'inestabilidad-tobillo': {
+  titulo: 'Inestabilidad crónica de tobillo',
+  img: 'img/inestabilidad-tobillo.jpg',
+  quees:
+    'Sensación de “flojera” o debilidad del tobillo que se tuerce con facilidad. Suele aparecer tras esguinces mal tratados o con rehabilitación insuficiente, por laxitud/lesión de los ligamentos laterales.',
+  sintomas: [
+    'Inestabilidad al caminar o correr (especialmente en terrenos irregulares)',
+    'Torceduras repetidas',
+    'Dolor e inflamación recurrente',
+    'Dificultad para retomar la actividad deportiva'
+  ],
+  consultar: [
+    'Episodios repetidos de torcedura pese a cuidados',
+    'Sensación persistente de “afloje” o fallos del tobillo',
+    'Dolor/inflamación que no mejora con reposo relativo y kinesiología',
+    'Antecedente de lesión ligamentaria completa o dudas diagnósticas'
+  ],
+  hacer: [
+    'Kinesiología con fortalecimiento muscular y propiocepción (equilibrio) 6–12 semanas',
+    'Uso de tobilleras o tape en deporte/impacto según indicación',
+    'Reentrenamiento de la marcha y del control neuromuscular',
+    'Estudios por imagen si se sospechan lesiones asociadas (radiografía, RM)',
+    'Valoración quirúrgica en casos severos o con laxitud marcada que no responden al tratamiento'
+  ],
+},
+
 
 };
 
