@@ -281,6 +281,30 @@ const PATOLOGIAS = {
     consultar: ['Dolor intenso o deformidad', 'Hormigueo, pérdida de fuerza o palidez en la mano', 'Caídas en pacientes con osteoporosis o comorbilidades'],
     hacer: ['Inmovilización inicial (cabestrillo) y analgesia indicada', 'Aplicar frío local y elevar ligeramente el brazo', 'Radiografías para definir yeso/órtesis o cirugía y plan de rehabilitación'],
   },
+'fractura-tobillo': {
+  titulo: 'Fractura de tobillo',
+  img: 'img/fractura-tobillo.jpg',
+  quees:
+    'Ruptura de uno o más huesos que forman el tobillo (tibia, peroné y/o astrágalo). Puede ser simple o compleja (bimaleolar, trimalleolar). Ocurre por caídas, torceduras, accidentes deportivos o de tránsito.',
+  sintomas: [
+    'Dolor intenso que aumenta con el movimiento o apoyo',
+    'Hinchazón y hematoma rápidos',
+    'Impotencia para caminar o apoyar',
+    'Deformidad visible en casos graves'
+  ],
+  consultar: [
+    'Imposibilidad de apoyar o caminar algunos pasos',
+    'Deformidad evidente, herida abierta o exposición ósea',
+    'Entumecimiento, palidez o frialdad del pie (signos neurovasculares)',
+    'Dolor muy intenso o traumatismo de alta energía'
+  ],
+  hacer: [
+    'Inmovilizar el tobillo bota walker y elevar el miembro; aplicar frío local intermitente',
+    'Evitar apoyar (muletas) hasta evaluación médica',
+    'Acudir a guardia para radiografías; en casos complejos puede requerirse TAC',
+    'El tratamiento depende del tipo: yeso/bota 6–8 semanas o cirugía (placas/tornillos) con rehabilitación posterior'
+  ],
+},
 
   // --- Columna
   lumbalgia: {
