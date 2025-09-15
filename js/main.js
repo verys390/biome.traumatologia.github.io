@@ -348,6 +348,31 @@ const PATOLOGIAS = {
     'Valoración quirúrgica en casos graves o progresivos'
   ],
 },
+'hipercifosis-dorsal': {
+  titulo: 'Hipercifosis dorsal',
+  img: 'img/hipercifosis-dorsal.jpg',
+  quees:
+    'Aumento de la curvatura dorsal (“joroba”). Puede provocar dolor interescapular, rigidez y fatiga postural. En adolescentes puede asociarse a enfermedad de Scheuermann; en adultos, a posturas sostenidas o cambios degenerativos.',
+  sintomas: [
+    'Dolor entre omóplatos y fatiga postural',
+    'Rigidez dorsal y menor extensión torácica',
+    'Hombros caídos y cabeza adelantada',
+    'Contracturas paravertebrales y pectorales tensos'
+  ],
+  consultar: [
+    'Dolor persistente o progresión visible de la curvatura',
+    'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
+    'Dificultad respiratoria o limitación funcional marcada',
+    'Sospecha en adolescentes (control temprano)'
+  ],
+  hacer: [
+    'Ejercicios de corrección postural y movilidad torácica',
+    'Fortalecer extensores dorsales y glúteos; activar el core',
+    'Estirar pectorales y flexores de cadera',
+    'Higiene postural/ergonomía en estudio y trabajo',
+    'Kinesiología guiada; en seleccionados, corset (jóvenes) o valoración quirúrgica si es severa/progresiva'
+  ],
+},
 
 
   // --- Miembro superior
