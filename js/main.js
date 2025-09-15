@@ -506,7 +506,7 @@ const PATOLOGIAS = {
   titulo: 'Ruptura del tendón de Aquiles',
   img: 'img/ruptura-aquiles.jpg',
   quees:
-    'Rotura parcial o completa del tendón de Aquiles. Lesión aguda cuando las fibras no soportan la tensión; limita caminar y ponerse de puntas de pie. Suele ocurrir con saltos, sprints o cambios bruscos de dirección.',
+    'Rotura parcial o completa del tendón de Aquiles. Lesión aguda se da cuando las fibras no soportan la tensión; genera limitación al caminar y ponerse de puntas de pie. Suele ocurrir con saltos, cambios bruscos de dirección.',
   sintomas: [
     'Sensación de latigazo o “patada” en la pantorrilla',
     'Dolor intenso y repentino (a veces con “chasquido”)',
