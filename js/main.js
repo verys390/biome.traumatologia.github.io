@@ -502,6 +502,30 @@ const PATOLOGIAS = {
     'Reeducación deportiva antes de retomar el impacto'
   ],
 },
+'ruptura-aquiles': {
+  titulo: 'Ruptura del tendón de Aquiles',
+  img: 'img/ruptura-aquiles.jpg',
+  quees:
+    'Rotura parcial o completa del tendón de Aquiles. Lesión aguda cuando las fibras no soportan la tensión; limita caminar y ponerse de puntas de pie. Suele ocurrir con saltos, sprints o cambios bruscos de dirección.',
+  sintomas: [
+    'Sensación de latigazo o “patada” en la pantorrilla',
+    'Dolor intenso y repentino (a veces con “chasquido”)',
+    'Dificultad para apoyar o ponerse en puntas de pie',
+    'Hinchazón y pérdida de fuerza en la parte posterior del tobillo'
+  ],
+  consultar: [
+    'Dolor súbito con chasquido y pérdida de fuerza',
+    'Imposibilidad de ponerse en puntas o deambular',
+    'Hendidura/hundimiento palpable en el tendón',
+    'Lesión durante salto/sprint con dolor inmediato'
+  ],
+  hacer: [
+    'Inmovilizar en ligera flexión plantar (equino) y evitar apoyar',
+    'Hielo local 10–15 min y elevación del miembro',
+    'Consulta URGENTE para examen y ecografía/ RM',
+    'Definir tratamiento: conservador (bota/yeso) o quirúrgico + kinesiología progresiva'
+  ],
+},
 
 
 };
