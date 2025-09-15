@@ -307,7 +307,7 @@ const PATOLOGIAS = {
 },
 
   // --- Columna
-  lumbalgia: {
+  'lumbalgia': {
     titulo: 'Lumbalgia',
     img: 'img/lumbar.jpg',
     quees: 'Dolor en la parte baja de la espalda, generalmente de origen mecánico. Suele relacionarse con sobrecarga física, postural o estrés prolongado.',
@@ -315,7 +315,7 @@ const PATOLOGIAS = {
     consultar: ['Dolor persistente que no mejora', 'Síntomas neurológicos (adormecimiento, pérdida de fuerza)', 'Antecedente de traumatismo importante'],
     hacer: ['Actividad física progresiva y adaptada', 'Fortalecimiento y movilidad', 'Hábitos de higiene postural en la vida diaria'],
   },
-  cervicalgia: {
+  'cervicalgia': {
     titulo: 'Cervicalgia',
     img: 'img/cervicalgia.jpg',
     quees: 'Dolor en la zona cervical, generalmente de origen mecánico. Suele asociarse a posturas sostenidas, tensión muscular y estrés prolongado.',
@@ -323,7 +323,7 @@ const PATOLOGIAS = {
     consultar: ['Dolor persistente', 'Síntomas neurológicos (hormigueo, pérdida de fuerza/sensibilidad)', 'Traumatismo importante o fiebre'],
     hacer: ['Pausas activas y movilidad suave, guiada', 'Fortalecimiento cervical y escapular', 'Optimizar ergonomía/postura en trabajo y vida diaria'],
   },
-  escoliosis: {
+  'escoliosis': {
   titulo: 'Escoliosis',
   img: 'img/escoliosis.jpg',
   quees:
