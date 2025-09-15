@@ -398,6 +398,31 @@ const PATOLOGIAS = {
     'Infiltraciones o valoración quirúrgica en casos seleccionados y avanzados'
   ],
 },
+'estenosis-canal-lumbar': {
+  titulo: 'Estenosis de canal lumbar',
+  img: 'img/estenosis-canal-lumbar.jpg',
+  quees:
+    'Estrechamiento del canal medular lumbar que comprime raíces nerviosas. Produce dolor lumbar con irradiación, calambres y debilidad en las piernas, que empeoran al caminar y mejoran al sentarse o inclinarse hacia delante (claudicación neurógena).',
+  sintomas: [
+    'Dolor lumbar irradiado a glúteos y piernas',
+    'Calambres, hormigueo o adormecimiento en miembros inferiores',
+    'Debilidad y sensación de pesadez al caminar',
+    'Necesidad de detenerse al caminar y alivio al sentarse/flexionar el tronco'
+  ],
+  consultar: [
+    'Dolor y limitación progresiva para caminar pese a medidas básicas',
+    'Déficit neurológico: debilidad marcada o pérdida de sensibilidad',
+    'Alteraciones de esfínteres o anestesia en “silla de montar” (urgencia)',
+    'Dolor nocturno, fiebre, pérdida de peso o antecedentes oncológicos'
+  ],
+  hacer: [
+    'Kinesiología: movilidad en flexión lumbar; fortalecer core y glúteos; estiramientos (isquios, gemelos)',
+    'Caminatas fraccionadas y bicicleta estática; evitar marchas prolongadas en extensión',
+    'Analgésicos/antiinflamatorios si corresponde, según indicación médica',
+    'Higiene postural, pausas activas y control de peso; faja lumbosacra en seleccionados',
+    'Resonancia magnética para confirmar; bloqueos/infiltraciones o descompresión quirúrgica si no hay respuesta'
+  ],
+},
 
 
   // --- Miembro superior
