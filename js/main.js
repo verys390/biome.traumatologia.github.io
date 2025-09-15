@@ -323,7 +323,7 @@ const PATOLOGIAS = {
     consultar: ['Dolor persistente', 'Síntomas neurológicos (hormigueo, pérdida de fuerza/sensibilidad)', 'Traumatismo importante o fiebre'],
     hacer: ['Pausas activas y movilidad suave, guiada', 'Fortalecimiento cervical y escapular', 'Optimizar ergonomía/postura en trabajo y vida diaria'],
   },
-  'escoliosis': {
+  escoliosis: {
   titulo: 'Escoliosis',
   img: 'img/escoliosis.jpg',
   quees:
@@ -371,6 +371,31 @@ const PATOLOGIAS = {
     'Estirar pectorales y flexores de cadera',
     'Higiene postural/ergonomía en estudio y trabajo',
     'Kinesiología guiada; en seleccionados, corset (jóvenes) o valoración quirúrgica si es severa/progresiva'
+  ],
+},
+'artrosis-vertebral': {
+  titulo: 'Artrosis vertebral',
+  img: 'img/artrosis-vertebral.jpg',
+  quees:
+    'Desgaste progresivo de las articulaciones de la columna (facetarias y discos). Frecuente en región cervical y lumbar. Produce dolor mecánico, rigidez y limitación de movilidad.',
+  sintomas: [
+    'Dolor cervical o lumbar que empeora con la carga o al final del día',
+    'Rigidez al iniciar el movimiento (mañana o tras reposo)',
+    'Crujidos y sensación de “agarrotamiento”',
+    'Irradiación a hombros/brazos o glúteos/muslos si hay compromiso radicular'
+  ],
+  consultar: [
+    'Dolor persistente que limita actividades pese a medidas básicas',
+    'Síntomas neurológicos: hormigueo, debilidad o pérdida de fuerza/sensibilidad',
+    'Dolor nocturno, fiebre o pérdida de peso (banderas rojas)',
+    'Trauma reciente con dolor importante, o dolor de inicio súbito en mayores'
+  ],
+  hacer: [
+    'Analgésicos/antiinflamatorios si corresponde (según indicación médica)',
+    'Kinesiología: movilidad, postura y fortalecimiento de core/extensores',
+    'Ergonomía: pausas activas, adaptar puesto de trabajo, colchón/almohada adecuados',
+    'Actividad aeróbica de bajo impacto (caminar, bici, agua)',
+    'Infiltraciones o valoración quirúrgica en casos seleccionados y avanzados'
   ],
 },
 
