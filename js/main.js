@@ -323,6 +323,32 @@ const PATOLOGIAS = {
     consultar: ['Dolor persistente', 'Síntomas neurológicos (hormigueo, pérdida de fuerza/sensibilidad)', 'Traumatismo importante o fiebre'],
     hacer: ['Pausas activas y movilidad suave, guiada', 'Fortalecimiento cervical y escapular', 'Optimizar ergonomía/postura en trabajo y vida diaria'],
   },
+  'escoliosis': {
+  titulo: 'Escoliosis',
+  img: 'img/escoliosis.jpg',
+  quees:
+    'Desviación lateral de la columna (a menudo con rotación vertebral). Puede notarse asimetría en hombros o caderas, giba, dolor muscular y fatiga postural.',
+  sintomas: [
+    'Asimetría de hombros, cintura o caderas',
+    'Dolor muscular y fatiga postural',
+    'Rigidez dorsal o lumbar',
+    'En adolescentes: giba al agacharse (test de Adams)'
+  ],
+  consultar: [
+    'Evaluación clínica y radiografía de columna completa para medir el ángulo de Cobb',
+    'Dolor persistente o progresión visible de la curva',
+    'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
+    'Sospecha en niños/adolescentes (control temprano)'
+  ],
+  hacer: [
+    'Ejercicios posturales y fortalecimiento de core y glúteos',
+    'Higiene postural y ergonomía en estudio/trabajo',
+    'Kinesiología específica (p.ej., métodos tipo Schroth) y controles periódicos',
+    'Uso de corset en adolescentes según indicación y grado de la curva',
+    'Valoración quirúrgica en casos graves o progresivos'
+  ],
+},
+
 
   // --- Miembro superior
   'tendinitis-hombro': {
