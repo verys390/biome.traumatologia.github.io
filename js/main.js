@@ -98,7 +98,7 @@ const debugIds = () => {
     } else {
       showNotice('<strong>Debug:</strong> sin IDs duplicados.', 'success', 2500);
     }
-  } catch {}
+  } catch { }
 };
 // Ejecuta el debug opcional al cargar
 document.addEventListener('DOMContentLoaded', debugIds);
@@ -148,7 +148,7 @@ const attachWaSubmit = (formId, builder) => {
   });
 };
 attachWaSubmit('contactForm', (d, n, t) => `Hola, soy ${n} (${t}). Motivo: ${d.get('mensaje')}`);
-attachWaSubmit('turnoForm',   (d, n, t) => `Hola, soy ${n} (${t}). Quiero un turno. Motivo: ${d.get('motivo')}`);
+attachWaSubmit('turnoForm', (d, n, t) => `Hola, soy ${n} (${t}). Quiero un turno. Motivo: ${d.get('motivo')}`);
 
 /* =========================================================
    Patologías: filtro + lazy
@@ -281,30 +281,30 @@ const PATOLOGIAS = {
     consultar: ['Dolor intenso o deformidad', 'Hormigueo, pérdida de fuerza o palidez en la mano', 'Caídas en pacientes con osteoporosis o comorbilidades'],
     hacer: ['Inmovilización inicial (cabestrillo) y analgesia indicada', 'Aplicar frío local y elevar ligeramente el brazo', 'Radiografías para definir yeso/órtesis o cirugía y plan de rehabilitación'],
   },
-'fractura-tobillo': {
-  titulo: 'Fractura de tobillo',
-  img: 'img/fractura-tobillo.jpg',
-  quees:
-    'Ruptura de uno o más huesos que forman el tobillo (tibia, peroné y/o astrágalo). Puede ser simple o compleja (bimaleolar, trimalleolar). Ocurre por caídas, torceduras, accidentes deportivos o de tránsito.',
-  sintomas: [
-    'Dolor intenso que aumenta con el movimiento o apoyo',
-    'Hinchazón y hematoma rápidos',
-    'Impotencia para caminar o apoyar',
-    'Deformidad visible en casos graves'
-  ],
-  consultar: [
-    'Imposibilidad de apoyar o caminar algunos pasos',
-    'Deformidad evidente, herida abierta o exposición ósea',
-    'Entumecimiento, palidez o frialdad del pie (signos neurovasculares)',
-    'Dolor muy intenso o traumatismo de alta energía'
-  ],
-  hacer: [
-    'Inmovilizar el tobillo y elevar el miembro; aplicar frío local intermitente',
-    'Evitar apoyar (muletas) hasta evaluación médica',
-    'Acudir a guardia para radiografías; en casos complejos puede requerirse TAC',
-    'El tratamiento depende del tipo: yeso/bota 6–8 semanas o cirugía (placas/tornillos) con rehabilitación posterior'
-  ],
-},
+  'fractura-tobillo': {
+    titulo: 'Fractura de tobillo',
+    img: 'img/fractura-tobillo.jpg',
+    quees:
+      'Ruptura de uno o más huesos que forman el tobillo (tibia, peroné y/o astrágalo). Puede ser simple o compleja (bimaleolar, trimalleolar). Ocurre por caídas, torceduras, accidentes deportivos o de tránsito.',
+    sintomas: [
+      'Dolor intenso que aumenta con el movimiento o apoyo',
+      'Hinchazón y hematoma rápidos',
+      'Impotencia para caminar o apoyar',
+      'Deformidad visible en casos graves'
+    ],
+    consultar: [
+      'Imposibilidad de apoyar o caminar algunos pasos',
+      'Deformidad evidente, herida abierta o exposición ósea',
+      'Entumecimiento, palidez o frialdad del pie (signos neurovasculares)',
+      'Dolor muy intenso o traumatismo de alta energía'
+    ],
+    hacer: [
+      'Inmovilizar el tobillo y elevar el miembro; aplicar frío local intermitente',
+      'Evitar apoyar (muletas) hasta evaluación médica',
+      'Acudir a guardia para radiografías; en casos complejos puede requerirse TAC',
+      'El tratamiento depende del tipo: yeso/bota 6–8 semanas o cirugía (placas/tornillos) con rehabilitación posterior'
+    ],
+  },
 
   // --- Columna
   'lumbalgia': {
@@ -324,105 +324,105 @@ const PATOLOGIAS = {
     hacer: ['Pausas activas y movilidad suave, guiada', 'Fortalecimiento cervical y escapular', 'Optimizar ergonomía/postura en trabajo y vida diaria'],
   },
   'escoliosis': {
-  titulo: 'Escoliosis',
-  img: 'img/escoliosis.jpg',
-  quees:
-    'Desviación lateral de la columna (a menudo con rotación vertebral). Puede notarse asimetría en hombros o caderas, giba, dolor muscular y fatiga postural.',
-  sintomas: [
-    'Asimetría de hombros, cintura o caderas',
-    'Dolor muscular y fatiga postural',
-    'Rigidez dorsal o lumbar',
-    'En adolescentes: giba al agacharse (test de Adams)'
-  ],
-  consultar: [
-    'Evaluación clínica y radiografía de columna completa para medir el ángulo de Cobb',
-    'Dolor persistente o progresión visible de la curva',
-    'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
-    'Sospecha en niños/adolescentes (control temprano)'
-  ],
-  hacer: [
-    'Ejercicios posturales y fortalecimiento de core y glúteos',
-    'Higiene postural y ergonomía en estudio/trabajo',
-    'Kinesiología específica (p.ej., métodos tipo Schroth) y controles periódicos',
-    'Uso de corset en adolescentes según indicación y grado de la curva',
-    'Valoración quirúrgica en casos graves o progresivos'
-  ],
-},
-'hipercifosis-dorsal': {
-  titulo: 'Hipercifosis dorsal',
-  img: 'img/hipercifosis-dorsal.jpg',
-  quees:
-    'Aumento de la curvatura dorsal (“joroba”). Puede provocar dolor interescapular, rigidez y fatiga postural. En adolescentes puede asociarse a enfermedad de Scheuermann; en adultos, a posturas sostenidas o cambios degenerativos.',
-  sintomas: [
-    'Dolor entre omóplatos y fatiga postural',
-    'Rigidez dorsal y menor extensión torácica',
-    'Hombros caídos y cabeza adelantada',
-    'Contracturas paravertebrales y pectorales tensos'
-  ],
-  consultar: [
-    'Dolor persistente o progresión visible de la curvatura',
-    'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
-    'Dificultad respiratoria o limitación funcional marcada',
-    'Sospecha en adolescentes (control temprano)'
-  ],
-  hacer: [
-    'Ejercicios de corrección postural y movilidad torácica',
-    'Fortalecer extensores dorsales y glúteos; activar el core',
-    'Estirar pectorales y flexores de cadera',
-    'Higiene postural/ergonomía en estudio y trabajo',
-    'Kinesiología guiada; en seleccionados, corset (jóvenes) o valoración quirúrgica si es severa/progresiva'
-  ],
-},
-'artrosis-vertebral': {
-  titulo: 'Artrosis vertebral',
-  img: 'img/artrosis-vertebral.jpg',
-  quees:
-    'Desgaste progresivo de las articulaciones de la columna (facetarias y discos). Frecuente en región cervical y lumbar. Produce dolor mecánico, rigidez y limitación de movilidad.',
-  sintomas: [
-    'Dolor cervical o lumbar que empeora con la carga o al final del día',
-    'Rigidez al iniciar el movimiento (mañana o tras reposo)',
-    'Crujidos y sensación de “agarrotamiento”',
-    'Irradiación a hombros/brazos o glúteos/muslos si hay compromiso radicular'
-  ],
-  consultar: [
-    'Dolor persistente que limita actividades pese a medidas básicas',
-    'Síntomas neurológicos: hormigueo, debilidad o pérdida de fuerza/sensibilidad',
-    'Dolor nocturno, fiebre o pérdida de peso (banderas rojas)',
-    'Trauma reciente con dolor importante, o dolor de inicio súbito en mayores'
-  ],
-  hacer: [
-    'Analgésicos/antiinflamatorios si corresponde (según indicación médica)',
-    'Kinesiología: movilidad, postura y fortalecimiento de core/extensores',
-    'Ergonomía: pausas activas, adaptar puesto de trabajo, colchón/almohada adecuados',
-    'Actividad aeróbica de bajo impacto (caminar, bici, agua)',
-    'Infiltraciones o valoración quirúrgica en casos seleccionados y avanzados'
-  ],
-},
-'estenosis-canal-lumbar': {
-  titulo: 'Estenosis de canal lumbar',
-  img: 'img/estenosis-canal-lumbar.jpg',
-  quees:
-    'Estrechamiento del canal medular lumbar que comprime raíces nerviosas. Produce dolor lumbar con irradiación, calambres y debilidad en las piernas, que empeoran al caminar y mejoran al sentarse o inclinarse hacia delante (claudicación neurógena).',
-  sintomas: [
-    'Dolor lumbar irradiado a glúteos y piernas',
-    'Calambres, hormigueo o adormecimiento en miembros inferiores',
-    'Debilidad y sensación de pesadez al caminar',
-    'Necesidad de detenerse al caminar y alivio al sentarse/flexionar el tronco'
-  ],
-  consultar: [
-    'Dolor y limitación progresiva para caminar pese a medidas básicas',
-    'Déficit neurológico: debilidad marcada o pérdida de sensibilidad',
-    'Alteraciones de esfínteres o anestesia en “silla de montar” (urgencia)',
-    'Dolor nocturno, fiebre, pérdida de peso o antecedentes oncológicos'
-  ],
-  hacer: [
-    'Kinesiología: movilidad en flexión lumbar; fortalecer core y glúteos; estiramientos (isquios, gemelos)',
-    'Caminatas fraccionadas y bicicleta estática; evitar marchas prolongadas en extensión',
-    'Analgésicos/antiinflamatorios si corresponde, según indicación médica',
-    'Higiene postural, pausas activas y control de peso; faja lumbosacra en seleccionados',
-    'Resonancia magnética para confirmar; bloqueos/infiltraciones o descompresión quirúrgica si no hay respuesta'
-  ],
-},
+    titulo: 'Escoliosis',
+    img: 'img/escoliosis.jpg',
+    quees:
+      'Desviación lateral de la columna (a menudo con rotación vertebral). Puede notarse asimetría en hombros o caderas, giba, dolor muscular y fatiga postural.',
+    sintomas: [
+      'Asimetría de hombros, cintura o caderas',
+      'Dolor muscular y fatiga postural',
+      'Rigidez dorsal o lumbar',
+      'En adolescentes: giba al agacharse (test de Adams)'
+    ],
+    consultar: [
+      'Evaluación clínica y radiografía de columna completa para medir el ángulo de Cobb',
+      'Dolor persistente o progresión visible de la curva',
+      'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
+      'Sospecha en niños/adolescentes (control temprano)'
+    ],
+    hacer: [
+      'Ejercicios posturales y fortalecimiento de core y glúteos',
+      'Higiene postural y ergonomía en estudio/trabajo',
+      'Kinesiología específica (p.ej., métodos tipo Schroth) y controles periódicos',
+      'Uso de corset en adolescentes según indicación y grado de la curva',
+      'Valoración quirúrgica en casos graves o progresivos'
+    ],
+  },
+  'hipercifosis-dorsal': {
+    titulo: 'Hipercifosis dorsal',
+    img: 'img/hipercifosis-dorsal.jpg',
+    quees:
+      'Aumento de la curvatura dorsal (“joroba”). Puede provocar dolor interescapular, rigidez y fatiga postural. En adolescentes puede asociarse a enfermedad de Scheuermann; en adultos, a posturas sostenidas o cambios degenerativos.',
+    sintomas: [
+      'Dolor entre omóplatos y fatiga postural',
+      'Rigidez dorsal y menor extensión torácica',
+      'Hombros caídos y cabeza adelantada',
+      'Contracturas paravertebrales y pectorales tensos'
+    ],
+    consultar: [
+      'Dolor persistente o progresión visible de la curvatura',
+      'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
+      'Dificultad respiratoria o limitación funcional marcada',
+      'Sospecha en adolescentes (control temprano)'
+    ],
+    hacer: [
+      'Ejercicios de corrección postural y movilidad torácica',
+      'Fortalecer extensores dorsales y glúteos; activar el core',
+      'Estirar pectorales y flexores de cadera',
+      'Higiene postural/ergonomía en estudio y trabajo',
+      'Kinesiología guiada; en seleccionados, corset (jóvenes) o valoración quirúrgica si es severa/progresiva'
+    ],
+  },
+  'artrosis-vertebral': {
+    titulo: 'Artrosis vertebral',
+    img: 'img/artrosis-vertebral.jpg',
+    quees:
+      'Desgaste progresivo de las articulaciones de la columna (facetarias y discos). Frecuente en región cervical y lumbar. Produce dolor mecánico, rigidez y limitación de movilidad.',
+    sintomas: [
+      'Dolor cervical o lumbar que empeora con la carga o al final del día',
+      'Rigidez al iniciar el movimiento (mañana o tras reposo)',
+      'Crujidos y sensación de “agarrotamiento”',
+      'Irradiación a hombros/brazos o glúteos/muslos si hay compromiso radicular'
+    ],
+    consultar: [
+      'Dolor persistente que limita actividades pese a medidas básicas',
+      'Síntomas neurológicos: hormigueo, debilidad o pérdida de fuerza/sensibilidad',
+      'Dolor nocturno, fiebre o pérdida de peso (banderas rojas)',
+      'Trauma reciente con dolor importante, o dolor de inicio súbito en mayores'
+    ],
+    hacer: [
+      'Analgésicos/antiinflamatorios si corresponde (según indicación médica)',
+      'Kinesiología: movilidad, postura y fortalecimiento de core/extensores',
+      'Ergonomía: pausas activas, adaptar puesto de trabajo, colchón/almohada adecuados',
+      'Actividad aeróbica de bajo impacto (caminar, bici, agua)',
+      'Infiltraciones o valoración quirúrgica en casos seleccionados y avanzados'
+    ],
+  },
+  'estenosis-canal-lumbar': {
+    titulo: 'Estenosis de canal lumbar',
+    img: 'img/estenosis-canal-lumbar.jpg',
+    quees:
+      'Estrechamiento del canal medular lumbar que comprime raíces nerviosas. Produce dolor lumbar con irradiación, calambres y debilidad en las piernas, que empeoran al caminar y mejoran al sentarse o inclinarse hacia delante (claudicación neurógena).',
+    sintomas: [
+      'Dolor lumbar irradiado a glúteos y piernas',
+      'Calambres, hormigueo o adormecimiento en miembros inferiores',
+      'Debilidad y sensación de pesadez al caminar',
+      'Necesidad de detenerse al caminar y alivio al sentarse/flexionar el tronco'
+    ],
+    consultar: [
+      'Dolor y limitación progresiva para caminar pese a medidas básicas',
+      'Déficit neurológico: debilidad marcada o pérdida de sensibilidad',
+      'Alteraciones de esfínteres o anestesia en “silla de montar” (urgencia)',
+      'Dolor nocturno, fiebre, pérdida de peso o antecedentes oncológicos'
+    ],
+    hacer: [
+      'Kinesiología: movilidad en flexión lumbar; fortalecer core y glúteos; estiramientos (isquios, gemelos)',
+      'Caminatas fraccionadas y bicicleta estática; evitar marchas prolongadas en extensión',
+      'Analgésicos/antiinflamatorios si corresponde, según indicación médica',
+      'Higiene postural, pausas activas y control de peso; faja lumbosacra en seleccionados',
+      'Resonancia magnética para confirmar; bloqueos/infiltraciones o descompresión quirúrgica si no hay respuesta'
+    ],
+  },
 
 
   // --- Miembro superior
@@ -528,105 +528,105 @@ const PATOLOGIAS = {
     hacer: ['Movilidad evitando pinzamientos', 'Fortalecer glúteos y control lumbopélvico', 'Educación postural y adaptación de actividades; derivación si no progresa'],
   },
   'esguince-tobillo': {
-  titulo: 'Esguince de tobillo (lateral)',
-  img: 'img/esguince-tobillo.jpg',
-  quees:
-    'Lesión de los ligamentos del tobillo (frecuente en inversión). Puede ser grado I–III según el estiramiento/rotura. Dolor, edema y a veces inestabilidad.',
-  sintomas: [
-    'Dolor lateral del tobillo',
-    'Hinchazón y hematomas',
-    'Dificultad para apoyar o caminar',
-    
-  ],
-  consultar: [
-    'Dolor intenso que impide apoyar o caminar 4 pasos',
-    'Deformidad marcada o sospecha de fractura',
-    'Dolor óseo en maléolos, base del 5º metatarsiano o navicular',
-    'Empeoramiento o nula mejoría en 48–72 h',
-    'Esguinces repetidos o sensación persistente de inestabilidad'
-  ],
-  hacer: [
-    'Reposo relativo, elevación y compresión elásticas; hielo 10–15 min cada 2–3 h (primeras 48 h)',
-    'Inmovilizar con bota whalker (2 semanas)',
-    ' Kinesiologia sin dolor (flexo-extensión, círculos suaves)',
-    'Propiocepción (equilibrio) y fortalecimiento de peroneos y glúteo medio',
-    'Vuelta gradual a deporte con tape o tobillera, sin dolor ni cojera'
-  ],
-},
-'inestabilidad-tobillo': {
-  titulo: 'Inestabilidad crónica de tobillo',
-  img: 'img/inestabilidad-tobillo.jpg',
-  quees:
-    'Sensación de debilidad del tobillo que se tuerce con facilidad. Suele aparecer tras esguinces mal tratados o con rehabilitación insuficiente, por laxitud/lesión de los ligamentos laterales.',
-  sintomas: [
-    'Inestabilidad al caminar o correr (especialmente en terrenos irregulares)',
-    'Torceduras repetidas',
-    'Dolor e inflamación recurrente',
-    'Dificultad para retomar la actividad deportiva'
-  ],
-  consultar: [
-    'Episodios repetidos de torcedura pese a cuidados',
-    'Sensación persistente de “afloje” del tobillo',
-    'Dolor/inflamación que no mejora con reposo relativo y kinesiología',
-    'Antecedente de lesión ligamentaria completa o dudas diagnósticas'
-  ],
-  hacer: [
-    'Kinesiología con fortalecimiento muscular y propiocepción (equilibrio) 6–12 semanas',
-    'Uso de tobilleras en deporte/impacto según indicación',
-    'Reentrenamiento de la marcha y del control neuromuscular',
-    'Estudios por imagen si se sospechan lesiones asociadas (radiografía, RM)',
-    'Valoración quirúrgica en casos severos o con laxitud marcada que no responden al tratamiento'
-  ],
-},
-'tendinitis-aquiles': {
-  titulo: 'Tendinitis del tendón de Aquiles',
-  img: 'img/tendinitis-aquiles.jpg',
-  quees:
-    'Inflamación aguda del tendón de Aquiles. Suele aparecer tras un esfuerzo intenso, sobrecarga o mal apoyo. Se diferencia de la tendinosis (degeneración crónica sin inflamación).',
-  sintomas: [
-    'Dolor agudo en la parte posterior del tobillo',
-    'Inflamación y calor local',
-    'Rigidez al levantarse',
-    'Dolor al caminar o correr'
-  ],
-  consultar: [
-    'Dolor que no mejora en 1–2 semanas con reposo relativo',
-    'Dificultad marcada para caminar o ponerse en puntas',
-    'Sospecha de rotura (chasquido, hundimiento, imposibilidad de elevar talón)',
-    'Antecedentes de tendinopatías o aumento brusco de carga'
-  ],
-  hacer: [
-    'Reposo relativo y crioterapia (hielo local) las primeras 48–72 h',
-    'Anti inflamatorios si corresponde, según indicación médica',
-    'Kinesiología: movilidad suave y progresión de ejercicios excéntricos',
-    'Calzado adecuado o taloneras; revisar técnica y superficie',
-    'Reeducación deportiva antes de retomar el impacto'
-  ],
-},
-'ruptura-aquiles': {
-  titulo: 'Ruptura del tendón de Aquiles',
-  img: 'img/ruptura-aquiles.jpg',
-  quees:
-    'Rotura parcial o completa del tendón de Aquiles. Lesión aguda se da cuando las fibras no soportan la tensión; genera limitación al caminar y ponerse de puntas de pie. Suele ocurrir con saltos, cambios bruscos de dirección.',
-  sintomas: [
-    'Sensación de latigazo o “patada” en la pantorrilla',
-    'Dolor intenso y repentino (a veces con “chasquido”)',
-    'Dificultad para apoyar o ponerse en puntas de pie',
-    'Hinchazón y pérdida de fuerza en la parte posterior del tobillo'
-  ],
-  consultar: [
-    'Dolor súbito con chasquido y pérdida de fuerza',
-    'Imposibilidad de ponerse en puntas o deambular',
-    'Hendidura/hundimiento palpable en el tendón',
-    'Lesión durante salto/sprint con dolor inmediato'
-  ],
-  hacer: [
-    'Inmovilizar en ligera flexión plantar (equino) y evitar apoyar',
-    'Hielo local 10–15 min y elevación del miembro',
-    'Consulta URGENTE para examen y ecografía/ RM',
-    'Definir tratamiento: conservador (bota/yeso) o quirúrgico + kinesiología progresiva'
-  ],
-},
+    titulo: 'Esguince de tobillo (lateral)',
+    img: 'img/esguince-tobillo.jpg',
+    quees:
+      'Lesión de los ligamentos del tobillo (frecuente en inversión). Puede ser grado I–III según el estiramiento/rotura. Dolor, edema y a veces inestabilidad.',
+    sintomas: [
+      'Dolor lateral del tobillo',
+      'Hinchazón y hematomas',
+      'Dificultad para apoyar o caminar',
+
+    ],
+    consultar: [
+      'Dolor intenso que impide apoyar o caminar 4 pasos',
+      'Deformidad marcada o sospecha de fractura',
+      'Dolor óseo en maléolos, base del 5º metatarsiano o navicular',
+      'Empeoramiento o nula mejoría en 48–72 h',
+      'Esguinces repetidos o sensación persistente de inestabilidad'
+    ],
+    hacer: [
+      'Reposo relativo, elevación y compresión elásticas; hielo 10–15 min cada 2–3 h (primeras 48 h)',
+      'Inmovilizar con bota whalker (2 semanas)',
+      ' Kinesiologia sin dolor (flexo-extensión, círculos suaves)',
+      'Propiocepción (equilibrio) y fortalecimiento de peroneos y glúteo medio',
+      'Vuelta gradual a deporte con tape o tobillera, sin dolor ni cojera'
+    ],
+  },
+  'inestabilidad-tobillo': {
+    titulo: 'Inestabilidad crónica de tobillo',
+    img: 'img/inestabilidad-tobillo.jpg',
+    quees:
+      'Sensación de debilidad del tobillo que se tuerce con facilidad. Suele aparecer tras esguinces mal tratados o con rehabilitación insuficiente, por laxitud/lesión de los ligamentos laterales.',
+    sintomas: [
+      'Inestabilidad al caminar o correr (especialmente en terrenos irregulares)',
+      'Torceduras repetidas',
+      'Dolor e inflamación recurrente',
+      'Dificultad para retomar la actividad deportiva'
+    ],
+    consultar: [
+      'Episodios repetidos de torcedura pese a cuidados',
+      'Sensación persistente de “afloje” del tobillo',
+      'Dolor/inflamación que no mejora con reposo relativo y kinesiología',
+      'Antecedente de lesión ligamentaria completa o dudas diagnósticas'
+    ],
+    hacer: [
+      'Kinesiología con fortalecimiento muscular y propiocepción (equilibrio) 6–12 semanas',
+      'Uso de tobilleras en deporte/impacto según indicación',
+      'Reentrenamiento de la marcha y del control neuromuscular',
+      'Estudios por imagen si se sospechan lesiones asociadas (radiografía, RM)',
+      'Valoración quirúrgica en casos severos o con laxitud marcada que no responden al tratamiento'
+    ],
+  },
+  'tendinitis-aquiles': {
+    titulo: 'Tendinitis del tendón de Aquiles',
+    img: 'img/tendinitis-aquiles.jpg',
+    quees:
+      'Inflamación aguda del tendón de Aquiles. Suele aparecer tras un esfuerzo intenso, sobrecarga o mal apoyo. Se diferencia de la tendinosis (degeneración crónica sin inflamación).',
+    sintomas: [
+      'Dolor agudo en la parte posterior del tobillo',
+      'Inflamación y calor local',
+      'Rigidez al levantarse',
+      'Dolor al caminar o correr'
+    ],
+    consultar: [
+      'Dolor que no mejora en 1–2 semanas con reposo relativo',
+      'Dificultad marcada para caminar o ponerse en puntas',
+      'Sospecha de rotura (chasquido, hundimiento, imposibilidad de elevar talón)',
+      'Antecedentes de tendinopatías o aumento brusco de carga'
+    ],
+    hacer: [
+      'Reposo relativo y crioterapia (hielo local) las primeras 48–72 h',
+      'Anti inflamatorios si corresponde, según indicación médica',
+      'Kinesiología: movilidad suave y progresión de ejercicios excéntricos',
+      'Calzado adecuado o taloneras; revisar técnica y superficie',
+      'Reeducación deportiva antes de retomar el impacto'
+    ],
+  },
+  'ruptura-aquiles': {
+    titulo: 'Ruptura del tendón de Aquiles',
+    img: 'img/ruptura-aquiles.jpg',
+    quees:
+      'Rotura parcial o completa del tendón de Aquiles. Lesión aguda se da cuando las fibras no soportan la tensión; genera limitación al caminar y ponerse de puntas de pie. Suele ocurrir con saltos, cambios bruscos de dirección.',
+    sintomas: [
+      'Sensación de latigazo o “patada” en la pantorrilla',
+      'Dolor intenso y repentino (a veces con “chasquido”)',
+      'Dificultad para apoyar o ponerse en puntas de pie',
+      'Hinchazón y pérdida de fuerza en la parte posterior del tobillo'
+    ],
+    consultar: [
+      'Dolor súbito con chasquido y pérdida de fuerza',
+      'Imposibilidad de ponerse en puntas o deambular',
+      'Hendidura/hundimiento palpable en el tendón',
+      'Lesión durante salto/sprint con dolor inmediato'
+    ],
+    hacer: [
+      'Inmovilizar en ligera flexión plantar (equino) y evitar apoyar',
+      'Hielo local 10–15 min y elevación del miembro',
+      'Consulta URGENTE para examen y ecografía/ RM',
+      'Definir tratamiento: conservador (bota/yeso) o quirúrgico + kinesiología progresiva'
+    ],
+  },
 
 
 };
@@ -639,9 +639,9 @@ const PATOLOGIAS = {
   if (!patoModalEl) return;
 
   const modalTitle = patoModalEl.querySelector('.modal-title');
-  const modalImg   = document.getElementById('patoImg');
-  const modalBody  = document.getElementById('patoContenido');
-  const btnInsta   = document.getElementById('btnInsta');
+  const modalImg = document.getElementById('patoImg');
+  const modalBody = document.getElementById('patoContenido');
+  const btnInsta = document.getElementById('btnInsta');
   const btnPatoTurno = document.getElementById('btnPatoTurno'); // botón WhatsApp patologías
 
   patoModalEl.addEventListener('show.bs.modal', (event) => {
@@ -693,7 +693,7 @@ const PATOLOGIAS = {
   const M = {
     'terapia-ocupacional': {
       titulo: 'Terapia ocupacional',
-      quees:  'Promueve autonomía y participación en actividades de la vida diaria mediante adaptación de tareas, entorno y uso de ayudas técnicas.',
+      quees: 'Promueve autonomía y participación en actividades de la vida diaria mediante adaptación de tareas, entorno y uso de ayudas técnicas.',
       aporta: [
         'Entrenamiento en AVD (vestido, higiene, cocina, trabajo).',
         'Férulas y productos de apoyo cuando corresponde.',
@@ -712,7 +712,7 @@ const PATOLOGIAS = {
     },
     'kinesiologia': {
       titulo: 'Kinesiología',
-      quees:  'Aborda dolor, movilidad y fuerza con ejercicio terapéutico y reeducación del movimiento, integrando terapia manual cuando es indicado.',
+      quees: 'Aborda dolor, movilidad y fuerza con ejercicio terapéutico y reeducación del movimiento, integrando terapia manual cuando es indicado.',
       aporta: [
         'Disminución del dolor al movimiento.',
         'Recuperación de rangos de movimiento y fuerza específica.',
@@ -731,7 +731,7 @@ const PATOLOGIAS = {
     },
     'pilates': {
       titulo: 'Pilates terapéutico',
-      quees:  'Entrenamiento de control del core, respiración y movilidad con bajo impacto; útil en columna y hombro.',
+      quees: 'Entrenamiento de control del core, respiración y movilidad con bajo impacto; útil en columna y hombro.',
       aporta: [
         'Mejora del control lumbopélvico y postura.',
         'Fuerza y flexibilidad sin sobrecargar.',
@@ -750,7 +750,7 @@ const PATOLOGIAS = {
     },
     'yoga': {
       titulo: 'Yoga adaptado',
-      quees:  'Movilidad global, respiración y manejo del estrés, con asanas ajustadas a tu condición.',
+      quees: 'Movilidad global, respiración y manejo del estrés, con asanas ajustadas a tu condición.',
       aporta: [
         'Flexibilidad y fuerza suave.',
         'Regulación del sistema nervioso.',
@@ -769,7 +769,7 @@ const PATOLOGIAS = {
     },
     'natacion': {
       titulo: 'Natación / Hidrocinesia',
-      quees:  'Trabajo en agua para movilizar y fortalecer con bajo impacto y descarga articular.',
+      quees: 'Trabajo en agua para movilizar y fortalecer con bajo impacto y descarga articular.',
       aporta: [
         'Mejora de capacidad aeróbica.',
         'Movilidad sin dolor por flotación.',
@@ -788,7 +788,7 @@ const PATOLOGIAS = {
     },
     'ergonomia-postural': {
       titulo: 'Ergonomía y ejercicios posturales',
-      quees:  'Hábitos y técnica para trabajar, estudiar y moverte sin sobrecargar.',
+      quees: 'Hábitos y técnica para trabajar, estudiar y moverte sin sobrecargar.',
       aporta: [
         'Pausas activas efectivas.',
         'Posturas correctas al levantar objetos.',
@@ -811,8 +811,8 @@ const PATOLOGIAS = {
   if (!proModalEl) return;
 
   const modalTitle = proModalEl.querySelector('.modal-title');
-  const modalBody  = document.getElementById('proContenido');
-  const btnTurno   = document.getElementById('btnProTurno'); // botón de la modal de Bienestar
+  const modalBody = document.getElementById('proContenido');
+  const btnTurno = document.getElementById('btnProTurno'); // botón de la modal de Bienestar
 
   const renderCols = (t, arr) => `
     <div class="col-md-4">
