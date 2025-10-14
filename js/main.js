@@ -635,25 +635,21 @@ const PATOLOGIAS = {
    Modal Bootstrap de “Patologías”
 ========================================================= */
 (() => {
-  const patoModalEl = document.getElementById('patoModal');
-  if (!patoModalEl) return;
+ patoModalEl.addEventListener('show.bs.modal', (event) => {
+  const triggerBtn = event.relatedTarget;
+  const rawKey = (triggerBtn?.getAttribute('data-key') || '');
+  const key = rawKey.trim(); // ← limpia espacios invisibles
+  const d = PATOLOGIAS[key];
 
-  const modalTitle = patoModalEl.querySelector('.modal-title');
-  const modalImg = document.getElementById('patoImg');
-  const modalBody = document.getElementById('patoContenido');
-  const btnInsta = document.getElementById('btnInsta');
-  const btnPatoTurno = document.getElementById('btnPatoTurno'); // botón WhatsApp patologías
-
-  patoModalEl.addEventListener('show.bs.modal', (event) => {
-    const triggerBtn = event.relatedTarget;
-    const key = triggerBtn?.getAttribute('data-key');
-    const d = key ? PATOLOGIAS[key] : null;
-
-    if (!key || !d) {
-      console.warn('[Patologías] Clave no encontrada:', key);
-      showNotice('Contenido no disponible para esta patología.', 'warning');
-      return;
-    }
+  if (!key || !d) {
+    console.warn('[Patologías] Clave no encontrada:', JSON.stringify(rawKey));
+    // En caso de error, vaciamos la modal para que no “herede” la anterior:
+    if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
+    if (modalImg) { modalImg.removeAttribute('src'); modalImg.alt = ''; }
+    if (modalBody) modalBody.innerHTML = '<p class="text-muted">No se pudo cargar esta patología.</p>';
+    showNotice('Contenido no disponible para esta patología.', 'warning');
+    return;
+  }
 
     if (modalTitle) modalTitle.textContent = d.titulo;
     if (modalImg) { modalImg.src = d.img; modalImg.alt = d.titulo; }
