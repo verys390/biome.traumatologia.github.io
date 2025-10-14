@@ -1,49 +1,41 @@
 /* ===============================
-   BIOME - main.js (sin bloque de videos) + mejoras UX/Accesibilidad/Debug
+   BIOME - main.js
    =============================== */
 'use strict';
 
 /* =========================================================
    Utilidades generales (avisos, bootstrap, debug)
 ========================================================= */
-
-/** Crea un contenedor de avisos accesibles y estilos mínimos la primera vez. */
 const ensureNoticeInfra = (() => {
   let ready = false;
   return () => {
     if (ready) return;
-    // Contenedor
     const wrap = document.createElement('div');
     wrap.id = 'js-notices';
     wrap.setAttribute('aria-live', 'polite');
     wrap.setAttribute('aria-atomic', 'true');
-    wrap.style.position = 'fixed';
-    wrap.style.right = '14px';
-    wrap.style.bottom = '14px';
-    wrap.style.display = 'grid';
-    wrap.style.gap = '8px';
-    wrap.style.zIndex = '20000';
+    Object.assign(wrap.style, {
+      position: 'fixed', right: '14px', bottom: '14px',
+      display: 'grid', gap: '8px', zIndex: '20000'
+    });
     document.body.appendChild(wrap);
-    // Estilos simples para los avisos
+
     const st = document.createElement('style');
     st.textContent = `
-      .js-notice{
-        font: 14px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans";
-        padding: .6rem .75rem; border-radius: 10px; border:1px solid rgba(0,0,0,.06);
-        box-shadow: 0 10px 26px rgba(15,23,42,.16); background:#fff; color:#0f172a; max-width: 320px;
-      }
-      .js-notice.info    { border-color: rgba(13,110,253,.25) }
-      .js-notice.success { border-color: rgba(25,135,84,.25)  }
-      .js-notice.warning { border-color: rgba(255,193,7,.35)  }
-      .js-notice.danger  { border-color: rgba(220,53,69,.35)  }
-      .js-notice strong  { font-weight: 600 }
+      .js-notice{font:14px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans";
+        padding:.6rem .75rem;border-radius:10px;border:1px solid rgba(0,0,0,.06);
+        box-shadow:0 10px 26px rgba(15,23,42,.16);background:#fff;color:#0f172a;max-width:320px}
+      .js-notice.info{border-color:rgba(13,110,253,.25)}
+      .js-notice.success{border-color:rgba(25,135,84,.25)}
+      .js-notice.warning{border-color:rgba(255,193,7,.35)}
+      .js-notice.danger{border-color:rgba(220,53,69,.35)}
+      .js-notice strong{font-weight:600}
     `;
     document.head.appendChild(st);
     ready = true;
   };
 })();
 
-/** Muestra un aviso flotante accesible. */
 const showNotice = (msg, type = 'warning', timeout = 4200) => {
   ensureNoticeInfra();
   const host = document.getElementById('js-notices');
@@ -63,22 +55,17 @@ const showNotice = (msg, type = 'warning', timeout = 4200) => {
   return el;
 };
 
-/** Verifica si Bootstrap Modal está disponible. Si no, avisa visualmente (una sola vez). */
 let _bootstrapWarned = false;
 const hasBootstrapModal = () => {
   const ok = !!(window.bootstrap && window.bootstrap.Modal);
   if (!ok && !_bootstrapWarned) {
     _bootstrapWarned = true;
-    showNotice(
-      '<strong>Atención:</strong> no se pudo abrir la ventana porque <em>Bootstrap</em> no está cargado.',
-      'warning'
-    );
+    showNotice('<strong>Atención:</strong> no se pudo abrir la ventana porque <em>Bootstrap</em> no está cargado.', 'warning');
     console.warn('[BIOME] Bootstrap Modal no disponible.');
   }
   return ok;
 };
 
-/** (Opcional) Reporta IDs duplicados en modo debug (?debug=ids o localStorage biome:debug-ids=1). */
 const debugIds = () => {
   try {
     const qs = new URLSearchParams(location.search);
@@ -98,9 +85,8 @@ const debugIds = () => {
     } else {
       showNotice('<strong>Debug:</strong> sin IDs duplicados.', 'success', 2500);
     }
-  } catch { }
+  } catch {}
 };
-// Ejecuta el debug opcional al cargar
 document.addEventListener('DOMContentLoaded', debugIds);
 
 /* =========================================================
@@ -109,8 +95,7 @@ document.addEventListener('DOMContentLoaded', debugIds);
 const WA_NUMBER = '5492344404004';
 const buildWaUrl = (text) => {
   const msg = encodeURIComponent(
-    text ||
-    'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?'
+    text || 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?'
   );
   return `https://wa.me/${WA_NUMBER}?text=${msg}`;
 };
@@ -126,10 +111,9 @@ const buildWaUrl = (text) => {
   ['ctaHero', 'ctaWaAside', 'waFab'].forEach((id) => {
     const el = document.getElementById(id);
     if (!el) return;
-    const defaultMsg =
-      id === 'ctaHero'
-        ? 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?'
-        : undefined;
+    const defaultMsg = id === 'ctaHero'
+      ? 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?'
+      : undefined;
     el.setAttribute('href', buildWaUrl(defaultMsg));
   });
 })();
@@ -148,7 +132,7 @@ const attachWaSubmit = (formId, builder) => {
   });
 };
 attachWaSubmit('contactForm', (d, n, t) => `Hola, soy ${n} (${t}). Motivo: ${d.get('mensaje')}`);
-attachWaSubmit('turnoForm', (d, n, t) => `Hola, soy ${n} (${t}). Quiero un turno. Motivo: ${d.get('motivo')}`);
+attachWaSubmit('turnoForm',  (d, n, t) => `Hola, soy ${n} (${t}). Quiero un turno. Motivo: ${d.get('motivo')}`);
 
 /* =========================================================
    Patologías: filtro + lazy
@@ -164,7 +148,7 @@ const prepareLazyImages = () => {
   grid.querySelectorAll('img').forEach((img) => {
     if (!img.dataset.lazySrc) {
       img.dataset.lazySrc = img.getAttribute('src') || '';
-      img.removeAttribute('src'); // evita carga al estar ocultas
+      img.removeAttribute('src');
       img.setAttribute('loading', 'lazy');
       img.setAttribute('decoding', 'async');
     }
@@ -177,458 +161,197 @@ const loadImagesInside = (el) => {
 };
 const hideAll = () => cards.forEach((c) => c.classList.add('d-none'));
 const showAll = () => {
-  cards.forEach((c) => {
-    c.classList.remove('d-none');
-    loadImagesInside(c);
-  });
+  cards.forEach((c) => { c.classList.remove('d-none'); loadImagesInside(c); });
   currentRegion = 'todas';
 };
 const showRegion = (region) => {
   hideAll();
   const subset = cards.filter((c) => c.dataset.region === region);
   if (!subset.length) showNotice('No hay contenidos para esa categoría.', 'info', 2500);
-  subset.forEach((c) => {
-    c.classList.remove('d-none');
-    loadImagesInside(c);
-  });
+  subset.forEach((c) => { c.classList.remove('d-none'); loadImagesInside(c); });
   currentRegion = region;
 };
-
-// Estado inicial del grid
-if (grid) {
-  prepareLazyImages();
-  hideAll(); // oculta en la home hasta que elijan filtro
-}
-
-// Click de categorías (toggle)
+if (grid) { prepareLazyImages(); hideAll(); }
 regionBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     const region = btn.dataset.region;
     const already = btn.classList.contains('active');
-
-    regionBtns.forEach((b) => {
-      b.classList.remove('active', 'border-primary', 'shadow');
-      b.setAttribute('aria-pressed', 'false');
-    });
-
-    if (already || currentRegion === region) {
-      hideAll();
-      currentRegion = 'todas';
-    } else {
-      btn.classList.add('active', 'border-primary', 'shadow');
-      btn.setAttribute('aria-pressed', 'true');
+    regionBtns.forEach((b) => { b.classList.remove('active','border-primary','shadow'); b.setAttribute('aria-pressed','false'); });
+    if (already || currentRegion === region) { hideAll(); currentRegion = 'todas'; }
+    else {
+      btn.classList.add('active','border-primary','shadow');
+      btn.setAttribute('aria-pressed','true');
       showRegion(region);
-      grid?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      grid?.scrollIntoView({ behavior:'smooth', block:'start' });
     }
   });
 });
-
-// Botón “Mostrar todas”
 showAllBtn?.addEventListener('click', () => {
-  regionBtns.forEach((b) => {
-    b.classList.remove('active', 'border-primary', 'shadow');
-    b.setAttribute('aria-pressed', 'false');
-  });
+  regionBtns.forEach((b) => { b.classList.remove('active','border-primary','shadow'); b.setAttribute('aria-pressed','false'); });
   showAll();
-  grid?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  grid?.scrollIntoView({ behavior:'smooth', block:'start' });
 });
 
 /* =========================================================
    Diccionario de patologías (para modal)
 ========================================================= */
 const PATOLOGIAS = {
-  // --- Fracturas frecuentes
-  'fractura-muneca': {
-    titulo: 'Fractura de muñeca',
-    img: 'img/muneca.jpg',
-    quees:
-      'Fractura ósea habitual del radio distal, típica de caídas sobre la mano extendida. Produce dolor, inflamación y a veces deformidad visible.',
-    sintomas: [
-      'Dolor intenso y aumento de volumen en la muñeca',
-      'Dificultad o imposibilidad para mover o cargar',
-      'Deformidad o “escalón” (según el trazo de fractura)',
-    ],
-    consultar: [
-      'Dolor intenso con imposibilidad de uso',
-      'Deformidad evidente o compromiso de piel',
-      'Hormigueo, palidez o frialdad en la mano (signos neurovasculares)',
-    ],
-    hacer: [
-      'Inmovilizar de forma provisoria y elevar el miembro',
-      'Aplicar frío local intermitente (protegiendo la piel)',
-      'Acudir a evaluación para radiografías y tratamiento (yeso o cirugía según caso)',
-    ],
+  /* --- Fracturas --- */
+  'fractura-muneca': { titulo:'Fractura de muñeca', img:'img/muneca.jpg',
+    quees:'Fractura ósea habitual del radio distal, típica de caídas sobre la mano extendida. Produce dolor, inflamación y a veces deformidad visible.',
+    sintomas:['Dolor intenso y aumento de volumen en la muñeca','Dificultad o imposibilidad para mover o cargar','Deformidad o “escalón” (según el trazo de fractura)'],
+    consultar:['Dolor intenso con imposibilidad de uso','Deformidad evidente o compromiso de piel','Hormigueo, palidez o frialdad en la mano (signos neurovasculares)'],
+    hacer:['Inmovilizar de forma provisoria y elevar el miembro','Aplicar frío local intermitente (protegiendo la piel)','Acudir a evaluación para radiografías y tratamiento (yeso o cirugía según caso)']
   },
-  'fractura-clavicula': {
-    titulo: 'Fractura de clavícula',
-    img: 'img/clavicula.jpg',
-    quees:
-      'Lesión frecuente tras caída sobre el hombro o traumatismo directo. Suele causar dolor inmediato, hematoma y dificultad para movilizar el brazo.',
-    sintomas: [
-      'Dolor y sensibilidad marcada sobre la clavícula',
-      'Hematoma e inflamación; posible “escalón” óseo',
-      'Limitación para elevar el brazo por dolor',
-    ],
-    consultar: ['Dolor intenso o deformidad evidente', 'Parestesias en brazo/mano o compromiso cutáneo', 'Traumatismo de alta energía o dolor que no cede'],
-    hacer: ['Uso de cabestrillo y analgesia indicada', 'Hielo local y reposo relativo, evitando cargas', 'Control traumatológico para definir tratamiento y rehabilitación'],
+  'fractura-clavicula': { titulo:'Fractura de clavícula', img:'img/clavicula.jpg',
+    quees:'Lesión frecuente tras caída sobre el hombro o traumatismo directo. Suele causar dolor inmediato, hematoma y dificultad para movilizar el brazo.',
+    sintomas:['Dolor y sensibilidad marcada sobre la clavícula','Hematoma e inflamación; posible “escalón” óseo','Limitación para elevar el brazo por dolor'],
+    consultar:['Dolor intenso o deformidad evidente','Parestesias en brazo/mano o compromiso cutáneo','Traumatismo de alta energía o dolor que no cede'],
+    hacer:['Uso de cabestrillo y analgesia indicada','Hielo local y reposo relativo, evitando cargas','Control traumatológico para definir tratamiento y rehabilitación']
   },
-  'fractura-humero': {
-    titulo: 'Fractura de húmero proximal',
-    img: 'img/humero.jpg',
-    quees:
-      'Fractura en la parte alta del húmero (cabeza/cuello), típica en adultos mayores por caída doméstica. Puede generar dolor intenso y gran hematoma en hombro y brazo.',
-    sintomas: ['Dolor agudo en hombro con impotencia funcional', 'Hematoma y aumento de volumen progresivo', 'Limitación marcada para elevar o rotar el brazo'],
-    consultar: ['Dolor intenso o deformidad', 'Hormigueo, pérdida de fuerza o palidez en la mano', 'Caídas en pacientes con osteoporosis o comorbilidades'],
-    hacer: ['Inmovilización inicial (cabestrillo) y analgesia indicada', 'Aplicar frío local y elevar ligeramente el brazo', 'Radiografías para definir yeso/órtesis o cirugía y plan de rehabilitación'],
+  'fractura-humero': { titulo:'Fractura de húmero proximal', img:'img/humero.jpg',
+    quees:'Fractura en la parte alta del húmero (cabeza/cuello), típica en adultos mayores por caída doméstica. Puede generar dolor intenso y gran hematoma en hombro y brazo.',
+    sintomas:['Dolor agudo en hombro con impotencia funcional','Hematoma y aumento de volumen progresivo','Limitación marcada para elevar o rotar el brazo'],
+    consultar:['Dolor intenso o deformidad','Hormigueo, pérdida de fuerza o palidez en la mano','Caídas en pacientes con osteoporosis o comorbilidades'],
+    hacer:['Inmovilización inicial (cabestrillo) y analgesia indicada','Aplicar frío local y elevar ligeramente el brazo','Radiografías para definir yeso/órtesis o cirugía y plan de rehabilitación']
   },
-  'fractura-tobillo': {
-    titulo: 'Fractura de tobillo',
-    img: 'img/fractura-tobillo.jpg',
-    quees:
-      'Ruptura de uno o más huesos que forman el tobillo (tibia, peroné y/o astrágalo). Puede ser simple o compleja (bimaleolar, trimalleolar). Ocurre por caídas, torceduras, accidentes deportivos o de tránsito.',
-    sintomas: [
-      'Dolor intenso que aumenta con el movimiento o apoyo',
-      'Hinchazón y hematoma rápidos',
-      'Impotencia para caminar o apoyar',
-      'Deformidad visible en casos graves'
-    ],
-    consultar: [
-      'Imposibilidad de apoyar o caminar algunos pasos',
-      'Deformidad evidente, herida abierta o exposición ósea',
-      'Entumecimiento, palidez o frialdad del pie (signos neurovasculares)',
-      'Dolor muy intenso o traumatismo de alta energía'
-    ],
-    hacer: [
-      'Inmovilizar el tobillo y elevar el miembro; aplicar frío local intermitente',
-      'Evitar apoyar (muletas) hasta evaluación médica',
-      'Acudir a guardia para radiografías; en casos complejos puede requerirse TAC',
-      'El tratamiento depende del tipo: yeso/bota 6–8 semanas o cirugía (placas/tornillos) con rehabilitación posterior'
-    ],
+  'fractura-tobillo': { titulo:'Fractura de tobillo', img:'img/fractura-tobillo.jpg',
+    quees:'Ruptura de uno o más huesos que forman el tobillo (tibia, peroné y/o astrágalo). Puede ser simple o compleja.',
+    sintomas:['Dolor intenso con movimiento o apoyo','Hinchazón y hematoma rápidos','Impotencia para caminar o apoyar','Deformidad visible en casos graves'],
+    consultar:['Imposibilidad de apoyar o caminar','Deformidad evidente o exposición ósea','Signos neurovasculares','Traumatismo de alta energía'],
+    hacer:['Inmovilizar y elevar el miembro','Evitar apoyar hasta evaluación','Radiografías / TAC según caso','Tratamiento: yeso/bota o cirugía + rehabilitación']
   },
 
-  // --- Columna
-  'lumbalgia': {
-    titulo: 'Lumbalgia',
-    img: 'img/lumbar.jpg',
-    quees: 'Dolor en la parte baja de la espalda, generalmente de origen mecánico. Suele relacionarse con sobrecarga física, postural o estrés prolongado.',
-    sintomas: ['Dolor localizado o que irradia a glúteos o piernas', 'Rigidez al levantarse que mejora con el movimiento', 'Alivio con actividad guiada y ejercicios progresivos'],
-    consultar: ['Dolor persistente que no mejora', 'Síntomas neurológicos (adormecimiento, pérdida de fuerza)', 'Antecedente de traumatismo importante'],
-    hacer: ['Actividad física progresiva y adaptada', 'Fortalecimiento y movilidad', 'Hábitos de higiene postural en la vida diaria'],
+  /* --- Columna --- */
+  'lumbalgia': { titulo:'Lumbalgia', img:'img/lumbar.jpg',
+    quees:'Dolor en la parte baja de la espalda, generalmente de origen mecánico.',
+    sintomas:['Dolor localizado o irradiado','Rigidez que mejora con el movimiento','Alivio con ejercicios guiados'],
+    consultar:['Dolor persistente','Síntomas neurológicos','Traumatismo importante'],
+    hacer:['Actividad progresiva y adaptada','Fortalecimiento y movilidad','Higiene postural']
   },
-  'cervicalgia': {
-    titulo: 'Cervicalgia',
-    img: 'img/cervicalgia.jpg',
-    quees: 'Dolor en la zona cervical, generalmente de origen mecánico. Suele asociarse a posturas sostenidas, tensión muscular y estrés prolongado.',
-    sintomas: ['Dolor y rigidez cervical (a veces irradiado a cabeza u hombros)', 'Cefalea tensional y sensación de sobrecarga', 'Molestia al girar el cuello o sostener posturas'],
-    consultar: ['Dolor persistente', 'Síntomas neurológicos (hormigueo, pérdida de fuerza/sensibilidad)', 'Traumatismo importante o fiebre'],
-    hacer: ['Pausas activas y movilidad suave, guiada', 'Fortalecimiento cervical y escapular', 'Optimizar ergonomía/postura en trabajo y vida diaria'],
+  'cervicalgia': { titulo:'Cervicalgia', img:'img/cervicalgia.jpg',
+    quees:'Dolor en la zona cervical, generalmente de origen mecánico.',
+    sintomas:['Dolor/rigidez cervical','Cefalea tensional','Molestia al girar el cuello o sostener posturas'],
+    consultar:['Dolor persistente','Síntomas neurológicos','Traumatismo o fiebre'],
+    hacer:['Pausas activas y movilidad suave','Fortalecimiento cervical/escapular','Ergonomía en trabajo/vida diaria']
   },
-  'escoliosis': {
-    titulo: 'Escoliosis',
-    img: 'img/escoliosis.jpg',
-    quees:
-      'Desviación lateral de la columna (a menudo con rotación vertebral). Puede notarse asimetría en hombros o caderas, giba, dolor muscular y fatiga postural.',
-    sintomas: [
-      'Asimetría de hombros, cintura o caderas',
-      'Dolor muscular y fatiga postural',
-      'Rigidez dorsal o lumbar',
-      'En adolescentes: giba al agacharse (test de Adams)'
-    ],
-    consultar: [
-      'Evaluación clínica y radiografía de columna completa para medir el ángulo de Cobb',
-      'Dolor persistente o progresión visible de la curva',
-      'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
-      'Sospecha en niños/adolescentes (control temprano)'
-    ],
-    hacer: [
-      'Ejercicios posturales y fortalecimiento de core y glúteos',
-      'Higiene postural y ergonomía en estudio/trabajo',
-      'Kinesiología específica (p.ej., métodos tipo Schroth) y controles periódicos',
-      'Uso de corset en adolescentes según indicación y grado de la curva',
-      'Valoración quirúrgica en casos graves o progresivos'
-    ],
+  'escoliosis': { titulo:'Escoliosis', img:'img/escoliosis.jpg',
+    quees:'Desviación lateral de la columna (a menudo con rotación vertebral).',
+    sintomas:['Asimetría de hombros/caderas','Dolor muscular y fatiga postural','Rigidez dorsal o lumbar','Giba en test de Adams'],
+    consultar:['Evaluación clínica + Rx (ángulo de Cobb)','Dolor persistente o progresión','Síntomas neurológicos','Sospecha en niños/adolescentes'],
+    hacer:['Ejercicios posturales y core','Ergonomía','Kinesiología específica (p.ej. Schroth)','Corset según indicación','Valoración quirúrgica si es grave']
   },
-  'hipercifosis-dorsal': {
-    titulo: 'Hipercifosis dorsal',
-    img: 'img/hipercifosis-dorsal.jpg',
-    quees:
-      'Aumento de la curvatura dorsal (“joroba”). Puede provocar dolor interescapular, rigidez y fatiga postural. En adolescentes puede asociarse a enfermedad de Scheuermann; en adultos, a posturas sostenidas o cambios degenerativos.',
-    sintomas: [
-      'Dolor entre omóplatos y fatiga postural',
-      'Rigidez dorsal y menor extensión torácica',
-      'Hombros caídos y cabeza adelantada',
-      'Contracturas paravertebrales y pectorales tensos'
-    ],
-    consultar: [
-      'Dolor persistente o progresión visible de la curvatura',
-      'Síntomas neurológicos (hormigueo, debilidad) o dolor nocturno',
-      'Dificultad respiratoria o limitación funcional marcada',
-      'Sospecha en adolescentes (control temprano)'
-    ],
-    hacer: [
-      'Ejercicios de corrección postural y movilidad torácica',
-      'Fortalecer extensores dorsales y glúteos; activar el core',
-      'Estirar pectorales y flexores de cadera',
-      'Higiene postural/ergonomía en estudio y trabajo',
-      'Kinesiología guiada; en seleccionados, corset (jóvenes) o valoración quirúrgica si es severa/progresiva'
-    ],
+  'hipercifosis-dorsal': { titulo:'Hipercifosis dorsal', img:'img/hipercifosis-dorsal.jpg',
+    quees:'Aumento de la curvatura dorsal (“joroba”).',
+    sintomas:['Dolor interescapular','Rigidez y menor extensión torácica','Cabeza adelantada / hombros caídos','Contracturas'],
+    consultar:['Dolor persistente o progresión','Síntomas neurológicos o dolor nocturno','Dificultad respiratoria','Sospecha en adolescentes'],
+    hacer:['Corrección postural y movilidad torácica','Fortalecer extensores y glúteos / activar core','Estirar pectorales y flexores de cadera','Ergonomía','Kinesiología; en casos seleccionados corset/valoración quirúrgica']
   },
-  'artrosis-vertebral': {
-    titulo: 'Artrosis vertebral',
-    img: 'img/artrosis-vertebral.jpg',
-    quees:
-      'Desgaste progresivo de las articulaciones de la columna (facetarias y discos). Frecuente en región cervical y lumbar. Produce dolor mecánico, rigidez y limitación de movilidad.',
-    sintomas: [
-      'Dolor cervical o lumbar que empeora con la carga o al final del día',
-      'Rigidez al iniciar el movimiento (mañana o tras reposo)',
-      'Crujidos y sensación de “agarrotamiento”',
-      'Irradiación a hombros/brazos o glúteos/muslos si hay compromiso radicular'
-    ],
-    consultar: [
-      'Dolor persistente que limita actividades pese a medidas básicas',
-      'Síntomas neurológicos: hormigueo, debilidad o pérdida de fuerza/sensibilidad',
-      'Dolor nocturno, fiebre o pérdida de peso (banderas rojas)',
-      'Trauma reciente con dolor importante, o dolor de inicio súbito en mayores'
-    ],
-    hacer: [
-      'Analgésicos/antiinflamatorios si corresponde (según indicación médica)',
-      'Kinesiología: movilidad, postura y fortalecimiento de core/extensores',
-      'Ergonomía: pausas activas, adaptar puesto de trabajo, colchón/almohada adecuados',
-      'Actividad aeróbica de bajo impacto (caminar, bici, agua)',
-      'Infiltraciones o valoración quirúrgica en casos seleccionados y avanzados'
-    ],
+  'artrosis-vertebral': { titulo:'Artrosis vertebral', img:'img/artrosis-vertebral.jpg',
+    quees:'Desgaste progresivo de las articulaciones de la columna.',
+    sintomas:['Dolor mecánico','Rigidez al iniciar movimiento','Crujidos','Posible irradiación si hay compromiso radicular'],
+    consultar:['Dolor persistente que limita','Síntomas neurológicos','Dolor nocturno/banderas rojas','Trauma reciente'],
+    hacer:['Analgésicos/antiinflamatorios (si corresponde)','Kinesiología: movilidad, postura y core','Ergonomía y pausas activas','Aeróbico bajo impacto','Infiltraciones/valoración quirúrgica en seleccionados']
   },
-  'estenosis-canal-lumbar': {
-    titulo: 'Estenosis de canal lumbar',
-    img: 'img/estenosis-canal-lumbar.jpg',
-    quees:
-      'Estrechamiento del canal medular lumbar que comprime raíces nerviosas. Produce dolor lumbar con irradiación, calambres y debilidad en las piernas, que empeoran al caminar y mejoran al sentarse o inclinarse hacia delante (claudicación neurógena).',
-    sintomas: [
-      'Dolor lumbar irradiado a glúteos y piernas',
-      'Calambres, hormigueo o adormecimiento en miembros inferiores',
-      'Debilidad y sensación de pesadez al caminar',
-      'Necesidad de detenerse al caminar y alivio al sentarse/flexionar el tronco'
-    ],
-    consultar: [
-      'Dolor y limitación progresiva para caminar pese a medidas básicas',
-      'Déficit neurológico: debilidad marcada o pérdida de sensibilidad',
-      'Alteraciones de esfínteres o anestesia en “silla de montar” (urgencia)',
-      'Dolor nocturno, fiebre, pérdida de peso o antecedentes oncológicos'
-    ],
-    hacer: [
-      'Kinesiología: movilidad en flexión lumbar; fortalecer core y glúteos; estiramientos (isquios, gemelos)',
-      'Caminatas fraccionadas y bicicleta estática; evitar marchas prolongadas en extensión',
-      'Analgésicos/antiinflamatorios si corresponde, según indicación médica',
-      'Higiene postural, pausas activas y control de peso; faja lumbosacra en seleccionados',
-      'Resonancia magnética para confirmar; bloqueos/infiltraciones o descompresión quirúrgica si no hay respuesta'
-    ],
+  'estenosis-canal-lumbar': { titulo:'Estenosis de canal lumbar', img:'img/estenosis-canal-lumbar.jpg',
+    quees:'Estrechamiento del canal lumbar con compresión radicular (claudicación neurógena).',
+    sintomas:['Dolor lumbar irradiado','Calambres/hormigueo','Debilidad y pesadez al caminar','Alivio al sentarse/flexionar'],
+    consultar:['Limitación progresiva pese a medidas','Déficit neurológico','Alteraciones esfínteres (urgencia)','Banderas rojas'],
+    hacer:['Movilidad en flexión / core / glúteos','Caminatas fraccionadas / bici estática','Medicamentos si corresponde','Higiene postural y peso','RM para confirmar; bloqueos/descompresión si no responde']
   },
 
-
-  // --- Miembro superior
-  'tendinitis-hombro': {
-    titulo: 'Tendinitis del hombro',
-    img: 'img/tendinitis.jpg',
-    quees:
-      'Inflamación de los tendones del manguito rotador, por sobreuso, gestos repetitivos o malas posturas. Dolor al elevar el brazo, molestias nocturnas y limitación funcional.',
-    sintomas: ['Dolor al elevar el brazo', 'Molestia nocturna al apoyar el hombro', 'Debilidad progresiva o sobrecarga en tareas cotidianas'],
-    consultar: ['Dolor > 2–3 semanas pese a reposo relativo', 'Pérdida súbita de fuerza o imposibilidad de mover', 'Luxación/traumatismo importante'],
-    hacer: ['Reposo relativo (evitar dolor), NO inmovilizar prolongado', 'Movilidad suave y fortalecimiento progresivo de manguito/escápula', 'Corregir ergonomía y adaptar actividades'],
+  /* --- Miembro superior / inferior (se mantienen) --- */
+  'tendinitis-hombro': { titulo:'Tendinitis del hombro', img:'img/tendinitis.jpg',
+    quees:'Inflamación de tendones del manguito rotador.',
+    sintomas:['Dolor al elevar el brazo','Molestia nocturna','Debilidad'],
+    consultar:['>2–3 semanas sin mejora','Pérdida súbita de fuerza','Luxación/trauma importante'],
+    hacer:['Reposo relativo (no inmovilizar largo)','Movilidad y fortalecimiento progresivo','Ergonomía y adaptación de tareas']
   },
-  'manguito-rotador': {
-    titulo: 'Síndrome del manguito rotador',
-    img: 'img/manguito.jpg',
-    quees:
-      'Lesión por sobreuso o degeneración de los tendones del hombro. Dolor al elevar el brazo, debilidad y molestias nocturnas; puede limitar actividades sobre cabeza.',
-    sintomas: ['Dolor entre 60°–120° de elevación', 'Debilidad para tareas en altura', 'Molestias nocturnas', 'Rigidez si no se trata'],
-    consultar: ['Dolor persistente sin mejora', 'Pérdida súbita de fuerza', 'Traumatismo asociado'],
-    hacer: ['Reposo relativo y movilidad guiada', 'Fortalecer manguito y estabilizadores escapulares', 'Ergonomía y adaptación de actividades'],
+  'manguito-rotador': { titulo:'Síndrome del manguito rotador', img:'img/manguito.jpg',
+    quees:'Lesión por sobreuso o degeneración de tendones del hombro.',
+    sintomas:['Dolor 60°–120°','Debilidad en altura','Molestias nocturnas','Rigidez'],
+    consultar:['Dolor persistente','Pérdida súbita de fuerza','Trauma'],
+    hacer:['Reposo relativo y movilidad','Fortalecer manguito/estabilizadores','Ergonomía y adaptación']
   },
-  'tunel-carpiano': {
-    titulo: 'Síndrome del túnel carpiano',
-    img: 'img/tunel.jpg',
-    quees:
-      'Compresión del nervio mediano por movimientos repetidos, posiciones mantenidas o factores inflamatorios. Cursa con hormigueo, dolor y adormecimiento en pulgar, índice y mayor.',
-    sintomas: ['Hormigueo nocturno en los tres primeros dedos', 'Dolor que puede irradiar a antebrazo', 'Disminución de fuerza de prensión o torpeza en pinza fina'],
-    consultar: ['Síntomas persistentes sin mejora', 'Pérdida de fuerza o atrofia tenar', 'Dolor intenso/progresivo o patología asociada'],
-    hacer: ['Reposo relativo y ergonomía (pausas activas)', 'Férula nocturna en posición neutra', 'Movilidad neural y fortalecimiento de mano/antebrazo'],
+  'tunel-carpiano': { titulo:'Síndrome del túnel carpiano', img:'img/tunel.jpg',
+    quees:'Compresión del nervio mediano.',
+    sintomas:['Hormigueo nocturno en 1º-3º dedo','Dolor que irradia','Disminución de fuerza'],
+    consultar:['Síntomas persistentes','Atrofia tenar','Dolor progresivo'],
+    hacer:['Ergonomía y pausas','Férula nocturna','Movilidad neural y fortalecimiento']
   },
-  'ganglion-muneca': {
-    titulo: 'Ganglión de muñeca',
-    img: 'img/ganglion.jpg',
-    quees:
-      'Quiste sinovial benigno desde cápsula articular o vaina tendinosa (dorso o cara palmar). Puede variar de tamaño y causar dolor o limitación.',
-    sintomas: ['Bulto visible o palpable que cambia de tamaño', 'Molestia con carga o extensión forzada', 'Rigidez o tensión en la muñeca'],
-    consultar: ['Dolor persistente o limitación significativa', 'Cambios rápidos de tamaño o inflamación marcada', 'Hormigueo/adormecimiento'],
-    hacer: ['Vigilancia si es asintomático', 'Adaptar actividades; férula temporal si duele', 'Evaluación para punción o cirugía según indicación'],
+  'ganglion-muneca': { titulo:'Ganglión de muñeca', img:'img/ganglion.jpg',
+    quees:'Quiste sinovial benigno.',
+    sintomas:['Bulto variable','Molestia con carga/extensión','Rigidez'],
+    consultar:['Dolor/limitación significativa','Cambios rápidos de tamaño','Hormigueo'],
+    hacer:['Vigilancia si asintomático','Adaptar actividades / férula','Punción o cirugía según caso']
   },
-  'dedo-resorte': {
-    titulo: 'Dedo en resorte (tenosinovitis estenosante)',
-    img: 'img/dedoresorte.jpg',
-    quees:
-      'Engrosamiento del tendón flexor o de la polea A1. Produce chasquido, dolor y bloqueo al flexionar/extender.',
-    sintomas: ['Dolor en base del dedo (polea A1)', 'Chasquido o “enganche” al mover', 'Rigidez matinal o bloqueo transitorio'],
-    consultar: ['Bloqueo doloroso persistente', 'Falta de mejoría con medidas conservadoras', 'Compromiso de varios dedos'],
-    hacer: ['Reposo relativo y adaptación de tareas', 'Deslizamiento tendinoso suave y estiramientos', 'Férula nocturna; considerar infiltración/cirugía según evolución'],
+  'dedo-resorte': { titulo:'Dedo en resorte', img:'img/dedoresorte.jpg',
+    quees:'Engrosamiento del tendón flexor o polea A1.',
+    sintomas:['Dolor base del dedo','Chasquido/enganche','Rigidez matinal'],
+    consultar:['Bloqueo persistente','Sin mejoría','Varios dedos comprometidos'],
+    hacer:['Reposo relativo','Deslizamiento tendinoso / estiramientos','Férula/infiltración/cirugía según evolución']
   },
 
-  // --- Miembro inferior
-  'artrosis-rotula': {
-    titulo: 'Artrosis de rótula (femoropatelar)',
-    img: 'img/rotula.jpg',
-    quees:
-      'Desgaste del cartílago entre rótula y fémur. Puede asociarse a mal alineamiento, sobrecarga repetida o edad. Dolor anterior de rodilla, chasquidos y rigidez breve inicial.',
-    sintomas: ['Dolor al subir/bajar escaleras o cuclillas', 'Crepitación y rigidez matinal corta', 'Molestia al estar mucho tiempo sentado (signo del cine)'],
-    consultar: ['Dolor persistente que limita actividad', 'Derrame, bloqueo o inestabilidad', 'Empeoramiento pese a medidas conservadoras'],
-    hacer: ['Movilidad y fortalecimiento de cuádriceps (VMO) y glúteos', 'Control de carga y técnica de sentadilla', 'Aeróbico de bajo impacto; control de peso si corresponde'],
+  'artrosis-rotula': { titulo:'Artrosis de rótula', img:'img/rotula.jpg',
+    quees:'Desgaste del cartílago femoropatelar.',
+    sintomas:['Dolor al escaleras/cuclillas','Crepitación','Signo del cine'],
+    consultar:['Dolor que limita','Derrame/bloqueo/inestabilidad','Sin respuesta a medidas'],
+    hacer:['VMO + glúteos','Control de carga/técnica','Aeróbico bajo impacto / peso']
   },
-  'artrosis-rodilla': {
-    titulo: 'Artrosis de rodilla (gonartrosis)',
-    img: 'img/rodilla.jpg',
-    quees:
-      'Desgaste progresivo del cartílago tibiofemoral y/o femoropatelar. Dolor mecánico con carga, rigidez corta y limitación funcional.',
-    sintomas: ['Dolor al estar de pie, caminar o escaleras', 'Rigidez breve al iniciar la marcha y crujidos', 'Reducción de rango con el tiempo'],
-    consultar: ['Derrame persistente o bloqueo', 'Dolor nocturno o deformidad progresiva', 'Limitación marcada en AVDs'],
-    hacer: ['Fortalecer cuádriceps, isquios, glúteos + propiocepción', 'Aeróbico de bajo impacto (bici, elíptico, agua)', 'Control de peso y adaptación de cargas/ayudas técnicas'],
+  'artrosis-rodilla': { titulo:'Artrosis de rodilla', img:'img/rodilla.jpg',
+    quees:'Desgaste tibiofemoral y/o femoropatelar.',
+    sintomas:['Dolor con carga','Rigidez breve inicial','Crujidos / menor rango'],
+    consultar:['Derrame o bloqueo','Dolor nocturno','Limitación marcada'],
+    hacer:['Fuerza (cuádriceps/isquios/glúteos)+propiocepción','Aeróbico bajo impacto','Peso y ayudas técnicas']
   },
-  'artrosis-cadera': {
-    titulo: 'Artrosis de cadera',
-    img: 'img/artrosis-cadera.jpg',
-    quees:
-      'Desgaste del cartílago de la articulación coxofemoral. Dolor inguinal mecánico, rigidez breve y limitación funcional.',
-    sintomas: ['Dolor inguinal con marcha o bipedestación', 'Rigidez corta al iniciar movimiento y crujidos', 'Dificultad para calzarse medias o cruzar piernas'],
-    consultar: ['Dolor persistente que limita la vida diaria', 'Cojera, bloqueo o inestabilidad', 'Falta de respuesta a tratamiento conservador'],
-    hacer: ['Fortalecer glúteos y core; mejorar marcha', 'Aeróbico de bajo impacto; control de peso', 'Adaptar cargas/ergonomía; evaluar ayudas técnicas'],
+  'artrosis-cadera': { titulo:'Artrosis de cadera', img:'img/artrosis-cadera.jpg',
+    quees:'Desgaste del cartílago coxofemoral.',
+    sintomas:['Dolor inguinal','Rigidez corta','Dificultad para calzarse'],
+    consultar:['Dolor que limita AVDs','Cojera/bloqueo','Fallo de manejo conservador'],
+    hacer:['Glúteos y core / marcha','Aeróbico bajo impacto / peso','Adaptar cargas/ergonomía']
   },
-  'impacto-femoroacetabular': {
-    titulo: 'Impacto femoroacetabular (FAI)',
-    img: 'img/femoro-acetabular.jpg',
-    quees:
-      'Conflicto mecánico entre cuello femoral y acetábulo (CAM, PINCER o mixto). Dolor inguinal con flexión/rotación, chasquidos y rigidez.',
-    sintomas: ['Dolor inguinal al estar sentado prolongado, subir al auto o agacharse', 'Clics/enganche al girar', 'Disminución de flexión y rotación interna'],
-    consultar: ['Dolor persistente que limita deporte/AVDs', 'Bloqueo o inestabilidad', 'Trauma o progresión de síntomas'],
-    hacer: ['Evitar posiciones de pinzamiento mantenidas', 'Movilidad específica y fortalecimiento de glúteos/rotadores', 'Control lumbopélvico; imágenes si no mejora'],
+  'impacto-femoroacetabular': { titulo:'Impacto femoroacetabular (FAI)', img:'img/femoro-acetabular.jpg',
+    quees:'Conflicto mecánico CAM/PINCER/mixto.',
+    sintomas:['Dolor inguinal con flexión/rotación','Clics/enganche','Menor flexión/RI'],
+    consultar:['Dolor que limita deporte/AVDs','Bloqueo/inestabilidad','Trauma o progresión'],
+    hacer:['Evitar pinzamientos mantenidos','Movilidad específica + glúteos/rotadores','Control lumbopélvico; imágenes si no mejora']
   },
-  'bursitis-trocanterica': {
-    titulo: 'Bursitis trocantérica',
-    img: 'img/bursitis.jpg',
-    quees:
-      'Inflamación de la bursa del trocánter mayor, asociada a sobreuso o patrón de carga alterado. Dolor lateral de cadera.',
-    sintomas: ['Dolor lateral al caminar o subir escaleras', 'Molestia al recostarse del lado afectado', 'Sensibilidad a la palpación del trocánter'],
-    consultar: ['Dolor que interfiere con el descanso', 'Coexistencia con dolor lumbar/radicular', 'Sin mejoría con medidas conservadoras'],
-    hacer: ['Reducir carga y trabajar mecánica de marcha', 'Fortalecer glúteo medio y estabilizadores pélvicos', 'Estiramientos; superficies/calzado cómodos; terapia guiada si persiste'],
+  'bursitis-trocanterica': { titulo:'Bursitis trocantérica', img:'img/bursitis.jpg',
+    quees:'Inflamación de la bursa del trocánter mayor.',
+    sintomas:['Dolor lateral al caminar/recostarse','Sensibilidad local'],
+    consultar:['Dolor que interfiere el descanso','Concomitante lumbar/radicular','Falla de medidas conservadoras'],
+    hacer:['Reducir carga / mecánica de marcha','Glúteo medio / estabilizadores pélvicos','Estiramientos; superficies/calzado; terapia guiada']
   },
-  'lesion-labrum-acetabular': {
-    titulo: 'Lesión del labrum acetabular',
-    img: 'img/labrum.jpg',
-    quees:
-      'Daño del labrum (anillo fibrocartilaginoso) que contribuye al sellado/estabilidad de la cadera. Puede asociarse a FAI o traumatismos.',
-    sintomas: ['Dolor inguinal con giros/pivoteos', 'Clics/enganche y sensación de inestabilidad', 'Rigidez y reducción de rango'],
-    consultar: ['Dolor persistente con limitación', 'Bloqueo doloroso o chasquidos persistentes', 'Fallo de manejo conservador o antecedente de trauma'],
-    hacer: ['Movilidad evitando pinzamientos', 'Fortalecer glúteos y control lumbopélvico', 'Educación postural y adaptación de actividades; derivación si no progresa'],
+  'lesion-labrum-acetabular': { titulo:'Lesión del labrum acetabular', img:'img/labrum.jpg',
+    quees:'Daño del anillo fibrocartilaginoso que aporta estabilidad.',
+    sintomas:['Dolor inguinal con giros','Clics/enganche e inestabilidad','Rigidez / menos rango'],
+    consultar:['Dolor persistente con limitación','Bloqueo o chasquidos persistentes','Fallo de manejo conservador o trauma'],
+    hacer:['Movilidad evitando pinzamientos','Glúteos / control lumbopélvico','Educación y adaptación; derivación si no progresa']
   },
-  'esguince-tobillo': {
-    titulo: 'Esguince de tobillo (lateral)',
-    img: 'img/esguince-tobillo.jpg',
-    quees:
-      'Lesión de los ligamentos del tobillo (frecuente en inversión). Puede ser grado I–III según el estiramiento/rotura. Dolor, edema y a veces inestabilidad.',
-    sintomas: [
-      'Dolor lateral del tobillo',
-      'Hinchazón y hematomas',
-      'Dificultad para apoyar o caminar',
-
-    ],
-    consultar: [
-      'Dolor intenso que impide apoyar o caminar 4 pasos',
-      'Deformidad marcada o sospecha de fractura',
-      'Dolor óseo en maléolos, base del 5º metatarsiano o navicular',
-      'Empeoramiento o nula mejoría en 48–72 h',
-      'Esguinces repetidos o sensación persistente de inestabilidad'
-    ],
-    hacer: [
-      'Reposo relativo, elevación y compresión elásticas; hielo 10–15 min cada 2–3 h (primeras 48 h)',
-      'Inmovilizar con bota whalker (2 semanas)',
-      ' Kinesiologia sin dolor (flexo-extensión, círculos suaves)',
-      'Propiocepción (equilibrio) y fortalecimiento de peroneos y glúteo medio',
-      'Vuelta gradual a deporte con tape o tobillera, sin dolor ni cojera'
-    ],
+  'esguince-tobillo': { titulo:'Esguince de tobillo (lateral)', img:'img/esguince-tobillo.jpg',
+    quees:'Lesión de ligamentos laterales (inversión).',
+    sintomas:['Dolor lateral','Hinchazón/hematomas','Dificultad para apoyar'],
+    consultar:['No puede caminar 4 pasos','Deformidad / sospecha de fractura','Dolor óseo en zonas Ottawa','Sin mejora en 48–72 h','Esguinces repetidos'],
+    hacer:['Reposo relativo, elevación, compresión; hielo','Bota walker (≈2 sem) si lo indicaron','Kine sin dolor (flexo-extensión/círculos)','Propiocepción y peroneos + glúteo medio','Vuelta gradual con tape/tobillera sin dolor']
   },
-  'inestabilidad-tobillo': {
-    titulo: 'Inestabilidad crónica de tobillo',
-    img: 'img/inestabilidad-tobillo.jpg',
-    quees:
-      'Sensación de debilidad del tobillo que se tuerce con facilidad. Suele aparecer tras esguinces mal tratados o con rehabilitación insuficiente, por laxitud/lesión de los ligamentos laterales.',
-    sintomas: [
-      'Inestabilidad al caminar o correr (especialmente en terrenos irregulares)',
-      'Torceduras repetidas',
-      'Dolor e inflamación recurrente',
-      'Dificultad para retomar la actividad deportiva'
-    ],
-    consultar: [
-      'Episodios repetidos de torcedura pese a cuidados',
-      'Sensación persistente de “afloje” del tobillo',
-      'Dolor/inflamación que no mejora con reposo relativo y kinesiología',
-      'Antecedente de lesión ligamentaria completa o dudas diagnósticas'
-    ],
-    hacer: [
-      'Kinesiología con fortalecimiento muscular y propiocepción (equilibrio) 6–12 semanas',
-      'Uso de tobilleras en deporte/impacto según indicación',
-      'Reentrenamiento de la marcha y del control neuromuscular',
-      'Estudios por imagen si se sospechan lesiones asociadas (radiografía, RM)',
-      'Valoración quirúrgica en casos severos o con laxitud marcada que no responden al tratamiento'
-    ],
+  'inestabilidad-tobillo': { titulo:'Inestabilidad crónica de tobillo', img:'img/inestabilidad-tobillo.jpg',
+    quees:'Sensación de flojera tras esguinces con mala recuperación.',
+    sintomas:['Torceduras repetidas','Dolor/inflamación recurrente','Dificultad para deporte'],
+    consultar:['Episodios pese a cuidados','Sensación persistente de afloje','Sin mejora con kine','Sospecha de lesión asociada'],
+    hacer:['Kine + propiocepción 6–12 semanas','Tobilleras en impacto','Reentrenamiento de marcha/control neuromuscular','Imágenes si dudas','Cirugía en casos severos']
   },
-  'tendinitis-aquiles': {
-    titulo: 'Tendinitis del tendón de Aquiles',
-    img: 'img/tendinitis-aquiles.jpg',
-    quees:
-      'Inflamación aguda del tendón de Aquiles. Suele aparecer tras un esfuerzo intenso, sobrecarga o mal apoyo. Se diferencia de la tendinosis (degeneración crónica sin inflamación).',
-    sintomas: [
-      'Dolor agudo en la parte posterior del tobillo',
-      'Inflamación y calor local',
-      'Rigidez al levantarse',
-      'Dolor al caminar o correr'
-    ],
-    consultar: [
-      'Dolor que no mejora en 1–2 semanas con reposo relativo',
-      'Dificultad marcada para caminar o ponerse en puntas',
-      'Sospecha de rotura (chasquido, hundimiento, imposibilidad de elevar talón)',
-      'Antecedentes de tendinopatías o aumento brusco de carga'
-    ],
-    hacer: [
-      'Reposo relativo y crioterapia (hielo local) las primeras 48–72 h',
-      'Anti inflamatorios si corresponde, según indicación médica',
-      'Kinesiología: movilidad suave y progresión de ejercicios excéntricos',
-      'Calzado adecuado o taloneras; revisar técnica y superficie',
-      'Reeducación deportiva antes de retomar el impacto'
-    ],
+  'tendinitis-aquiles': { titulo:'Tendinitis del tendón de Aquiles', img:'img/tendinitis-aquiles.jpg',
+    quees:'Inflamación aguda por sobrecarga o esfuerzo.',
+    sintomas:['Dolor posterior','Inflamación/calor','Rigidez matinal','Dolor al caminar/correr'],
+    consultar:['No mejora en 1–2 semanas','Dificultad marcada para caminar o puntas','Sospecha de rotura','Aumento brusco de carga / antecedentes'],
+    hacer:['Reposo relativo + hielo 48–72 h','Fármacos si corresponde','Kine: movilidad + excéntricos','Calzado/taloneras; revisar técnica/superficie','Reeducación antes del impacto']
   },
-  'ruptura-aquiles': {
-    titulo: 'Ruptura del tendón de Aquiles',
-    img: 'img/ruptura-aquiles.jpg',
-    quees:
-      'Rotura parcial o completa del tendón de Aquiles. Lesión aguda se da cuando las fibras no soportan la tensión; genera limitación al caminar y ponerse de puntas de pie. Suele ocurrir con saltos, cambios bruscos de dirección.',
-    sintomas: [
-      'Sensación de latigazo o “patada” en la pantorrilla',
-      'Dolor intenso y repentino (a veces con “chasquido”)',
-      'Dificultad para apoyar o ponerse en puntas de pie',
-      'Hinchazón y pérdida de fuerza en la parte posterior del tobillo'
-    ],
-    consultar: [
-      'Dolor súbito con chasquido y pérdida de fuerza',
-      'Imposibilidad de ponerse en puntas o deambular',
-      'Hendidura/hundimiento palpable en el tendón',
-      'Lesión durante salto/sprint con dolor inmediato'
-    ],
-    hacer: [
-      'Inmovilizar en ligera flexión plantar (equino) y evitar apoyar',
-      'Hielo local 10–15 min y elevación del miembro',
-      'Consulta URGENTE para examen y ecografía/ RM',
-      'Definir tratamiento: conservador (bota/yeso) o quirúrgico + kinesiología progresiva'
-    ],
-  },
-
-
+  'ruptura-aquiles': { titulo:'Ruptura del tendón de Aquiles', img:'img/ruptura-aquiles.jpg',
+    quees:'Rotura parcial o completa del tendón.',
+    sintomas:['“Patada/chasquido” súbito','Dolor intenso','No puede ponerse en puntas','Hinchazón y pérdida de fuerza'],
+    consultar:['Urgente: dolor con chasquido y déficit','Imposibilidad para puntas/deambular','Hendidura palpable','Lesión durante salto/sprint'],
+    hacer:['Inmovilizar en equino y no apoyar','Hielo y elevación','Consulta URGENTE + eco/RM','Definir conservador/quirúrgico + rehabilitación']
+  }
 };
 
 /* =========================================================
@@ -650,7 +373,6 @@ const PATOLOGIAS = {
     if (btn) patoModalEl.dataset.currentKey = (btn.dataset.key || '').trim();
   });
 
-  // Limpia siempre para que no “herede” el contenido anterior
   const resetModal = () => {
     if (modalTitle) modalTitle.textContent = '';
     if (modalImg)   { modalImg.removeAttribute('src'); modalImg.alt = ''; }
@@ -658,51 +380,54 @@ const PATOLOGIAS = {
   };
 
   patoModalEl.addEventListener('show.bs.modal', (event) => {
-    resetModal();
+    try {
+      resetModal();
 
-    // Tomamos key de relatedTarget o del fallback guardado
-    const triggerBtn = event.relatedTarget;
-    const rawKey = triggerBtn?.getAttribute('data-key') || patoModalEl.dataset.currentKey || '';
-    const key = rawKey.trim();
-    const d = key ? PATOLOGIAS[key] : null;
+      const triggerBtn = event.relatedTarget;
+      const rawKey = triggerBtn?.getAttribute('data-key') || patoModalEl.dataset.currentKey || '';
+      const key = rawKey.trim();
+      const d = key ? PATOLOGIAS[key] : null;
 
-    if (!d) {
-      console.warn('[Patologías] clave no encontrada:', JSON.stringify(rawKey));
-      if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
-      if (modalBody)  modalBody.innerHTML = '<p class="text-danger mb-0">No se pudo cargar esta patología.</p>';
-      showNotice('Contenido no disponible para esta patología.', 'warning');
-      return;
-    }
+      if (!d) {
+        console.warn('[Patologías] clave no encontrada:', JSON.stringify(rawKey));
+        if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
+        if (modalBody)  modalBody.innerHTML = '<p class="text-danger mb-0">No se pudo cargar esta patología.</p>';
+        showNotice('Contenido no disponible para esta patología.', 'warning');
+        return;
+      }
 
-    if (modalTitle) modalTitle.textContent = d.titulo;
-    if (modalImg)   { modalImg.src = d.img; modalImg.alt = d.titulo; }
+      if (modalTitle) modalTitle.textContent = d.titulo;
+      if (modalImg)   { modalImg.src = d.img; modalImg.alt = d.titulo; }
 
-    const col = (t, arr) => `
-      <div class="col-md-4">
-        <h6 class="mb-2">${t}</h6>
-        <ul class="mb-0">${arr.map((i) => `<li>${i}</li>`).join('')}</ul>
-      </div>`;
-
-    if (modalBody) {
-      modalBody.innerHTML = `
-        <h6 class="text-primary">¿Qué es?</h6>
-        <p>${d.quees}</p>
-        <div class="row g-3">
-          ${col('Síntomas', d.sintomas)}
-          ${col('Cuándo consultar', d.consultar)}
-          ${col('Qué podés hacer', d.hacer)}
+      const col = (t, arr) => `
+        <div class="col-md-4">
+          <h6 class="mb-2">${t}</h6>
+          <ul class="mb-0">${arr.map((i) => `<li>${i}</li>`).join('')}</ul>
         </div>`;
+
+      if (modalBody) {
+        modalBody.innerHTML = `
+          <h6 class="text-primary">¿Qué es?</h6>
+          <p>${d.quees}</p>
+          <div class="row g-3">
+            ${col('Síntomas', d.sintomas)}
+            ${col('Cuándo consultar', d.consultar)}
+            ${col('Qué podés hacer', d.hacer)}
+          </div>`;
+      }
+
+      const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
+      if (btnInsta) btnInsta.href = `${INSTAGRAM}?utm_source=web&p=${encodeURIComponent(key)}`;
+
+      const turnoMsg = 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
+      const waHref = buildWaUrl(turnoMsg);
+      if (btnPatoTurno) btnPatoTurno.href = waHref;
+    } catch (e) {
+      console.error('[Patologías] error en modal:', e);
+      showNotice('Ocurrió un error al armar la información.', 'danger');
     }
-
-    const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
-    if (btnInsta) btnInsta.href = `${INSTAGRAM}?utm_source=web&p=${encodeURIComponent(key)}`;
-
-    const turnoMsg = 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
-    const waHref = buildWaUrl(turnoMsg);
-    if (btnPatoTurno) btnPatoTurno.href = waHref;
   });
 })();
-
 
 /* =========================================================
    Bienestar / Profesionales: modal dinámica
@@ -712,116 +437,44 @@ const PATOLOGIAS = {
     'terapia-ocupacional': {
       titulo: 'Terapia ocupacional',
       quees: 'Promueve autonomía y participación en actividades de la vida diaria mediante adaptación de tareas, entorno y uso de ayudas técnicas.',
-      aporta: [
-        'Entrenamiento en AVD (vestido, higiene, cocina, trabajo).',
-        'Férulas y productos de apoyo cuando corresponde.',
-        'Estrategias para conservar energía y evitar dolor.',
-      ],
-      cuando: [
-        'Tras cirugías de miembro superior o mano.',
-        'Dolor crónico que limita la función.',
-        'Necesidad de adaptar el hogar o el puesto laboral.',
-      ],
-      incluye: [
-        'Evaluación del desempeño y objetivos.',
-        'Plan de entrenamiento funcional.',
-        'Educación a paciente/familia y seguimiento.',
-      ],
+      aporta: ['Entrenamiento en AVD (vestido, higiene, cocina, trabajo).','Férulas y productos de apoyo cuando corresponde.','Estrategias para conservar energía y evitar dolor.'],
+      cuando: ['Tras cirugías de miembro superior o mano.','Dolor crónico que limita la función.','Necesidad de adaptar el hogar o el puesto laboral.'],
+      incluye: ['Evaluación del desempeño y objetivos.','Plan de entrenamiento funcional.','Educación a paciente/familia y seguimiento.'],
     },
     'kinesiologia': {
       titulo: 'Kinesiología',
       quees: 'Aborda dolor, movilidad y fuerza con ejercicio terapéutico y reeducación del movimiento, integrando terapia manual cuando es indicado.',
-      aporta: [
-        'Disminución del dolor al movimiento.',
-        'Recuperación de rangos de movimiento y fuerza específica.',
-        'Prevención de recaídas con autocuidado.',
-      ],
-      cuando: [
-        'Lumbalgia, cervicalgia, tendinopatías.',
-        'Postquirúrgico o post-inmovilización.',
-        'Reintegro progresivo al deporte o trabajo.',
-      ],
-      incluye: [
-        'Ejercicio dosificado y progresivo.',
-        'Educación y ergonomía.',
-        'Plan personalizado.',
-      ],
+      aporta: ['Disminución del dolor al movimiento.','Recuperación de rangos y fuerza.','Prevención de recaídas con autocuidado.'],
+      cuando: ['Lumbalgia, cervicalgia, tendinopatías.','Postquirúrgico o post-inmovilización.','Reintegro progresivo al deporte o trabajo.'],
+      incluye: ['Ejercicio dosificado y progresivo.','Educación y ergonomía.','Plan personalizado.'],
     },
     'pilates': {
       titulo: 'Pilates terapéutico',
-      quees: 'Entrenamiento de control del core, respiración y movilidad con bajo impacto; útil en columna y hombro.',
-      aporta: [
-        'Mejora del control lumbopélvico y postura.',
-        'Fuerza y flexibilidad sin sobrecargar.',
-        'Conciencia corporal y patrón respiratorio.',
-      ],
-      cuando: [
-        'Dolor lumbar/cervical mecánico.',
-        'Disfunciones escapulares o de hombro.',
-        'Recuperación gradual tras alta de kinesiología.',
-      ],
-      incluye: [
-        'Sesiones guiadas y adaptadas.',
-        'Progresiones seguras (suelo/aparatos).',
-        'Plan de ejercicios en casa.',
-      ],
+      quees: 'Control del core, respiración y movilidad con bajo impacto; útil en columna y hombro.',
+      aporta: ['Mejora del control lumbopélvico y postura.','Fuerza y flexibilidad sin sobrecargar.','Conciencia corporal y respiración.'],
+      cuando: ['Dolor lumbar/cervical mecánico.','Disfunciones escapulares u hombro.','Recuperación tras alta de kinesiología.'],
+      incluye: ['Sesiones guiadas y adaptadas.','Progresiones seguras (suelo/aparatos).','Plan de ejercicios en casa.'],
     },
     'yoga': {
       titulo: 'Yoga adaptado',
-      quees: 'Movilidad global, respiración y manejo del estrés, con asanas ajustadas a tu condición.',
-      aporta: [
-        'Flexibilidad y fuerza suave.',
-        'Regulación del sistema nervioso.',
-        'Mejor descanso y sensación de bienestar.',
-      ],
-      cuando: [
-        'Dolor musculoesquelético mecánico.',
-        'Estrés/ansiedad vinculados al dolor.',
-        'Búsqueda de hábitos sostenibles.',
-      ],
-      incluye: [
-        'Posturas y respiración adaptadas.',
-        'Progresiones graduales y seguras.',
-        'Contraindicaciones revisadas previamente.',
-      ],
+      quees: 'Movilidad global, respiración y manejo del estrés, con asanas ajustadas.',
+      aporta: ['Flexibilidad y fuerza suave.','Regulación del sistema nervioso.','Mejor descanso y bienestar.'],
+      cuando: ['Dolor mecánico.','Estrés/ansiedad vinculados al dolor.','Hábitos sostenibles.'],
+      incluye: ['Posturas y respiración adaptadas.','Progresiones graduales y seguras.','Contraindicaciones revisadas.'],
     },
     'natacion': {
       titulo: 'Natación / Hidrocinesia',
-      quees: 'Trabajo en agua para movilizar y fortalecer con bajo impacto y descarga articular.',
-      aporta: [
-        'Mejora de capacidad aeróbica.',
-        'Movilidad sin dolor por flotación.',
-        'Fortalecimiento global.',
-      ],
-      cuando: [
-        'Artrosis de rodilla y cadera.',
-        'Reacondicionamiento general.',
-        'Exceso de impacto articular.',
-      ],
-      incluye: [
-        'Técnica y dosificación según nivel.',
-        'Hidrocinesia guiada si es necesario.',
-        'Plan complementario fuera del agua.',
-      ],
+      quees: 'Trabajo en agua para movilizar y fortalecer con bajo impacto.',
+      aporta: ['Mejora aeróbica.','Movilidad sin dolor por flotación.','Fortalecimiento global.'],
+      cuando: ['Artrosis de rodilla y cadera.','Reacondicionamiento general.','Exceso de impacto articular.'],
+      incluye: ['Técnica y dosificación según nivel.','Hidrocinesia guiada si hace falta.','Plan complementario fuera del agua.'],
     },
     'ergonomia-postural': {
       titulo: 'Ergonomía y ejercicios posturales',
       quees: 'Hábitos y técnica para trabajar, estudiar y moverte sin sobrecargar.',
-      aporta: [
-        'Pausas activas efectivas.',
-        'Posturas correctas al levantar objetos.',
-        'Prevención de recurrencias.',
-      ],
-      cuando: [
-        'Jornadas prolongadas sentado/de pie.',
-        'Dolor por posturas mantenidas.',
-        'Inicio de plan de actividad física.',
-      ],
-      incluye: [
-        'Evaluación y educación postural.',
-        'Rutina breve y sostenible.',
-        'Ajustes de entorno (alturas, apoyos).',
-      ],
+      aporta: ['Pausas activas efectivas.','Levantamiento seguro de objetos.','Prevención de recurrencias.'],
+      cuando: ['Jornadas sentado/de pie.','Dolor por posturas mantenidas.','Inicio de actividad física.'],
+      incluye: ['Evaluación y educación postural.','Rutina breve y sostenible.','Ajustes de entorno (alturas, apoyos).'],
     },
   };
 
@@ -829,8 +482,9 @@ const PATOLOGIAS = {
   if (!proModalEl) return;
 
   const modalTitle = proModalEl.querySelector('.modal-title');
-  const modalBody = document.getElementById('proContenido');
-  const btnTurno = document.getElementById('btnProTurno'); // botón de la modal de Bienestar
+  const modalBody  = document.getElementById('proContenido');
+  const btnInfo    = document.getElementById('btnProInfo');   // opcional (Instagram)
+  const btnTurno   = document.getElementById('btnProTurno');  // WhatsApp
 
   const renderCols = (t, arr) => `
     <div class="col-md-4">
@@ -838,12 +492,13 @@ const PATOLOGIAS = {
       <ul class="mb-0">${arr.map(i => `<li>${i}</li>`).join('')}</ul>
     </div>`;
 
-  /** Llena la modal según la clave del diccionario. */
   const fillProModal = (key) => {
     const d = key ? M[key] : null;
     if (!d) {
       console.warn('[Bienestar] Clave inexistente:', key);
       showNotice('Contenido no disponible para esta opción.', 'warning');
+      if (modalTitle) modalTitle.textContent = 'Bienestar y profesionales';
+      if (modalBody)  modalBody.innerHTML = '<p class="text-muted mb-0">No se pudo cargar la información.</p>';
       return false;
     }
 
@@ -859,47 +514,48 @@ const PATOLOGIAS = {
         </div>`;
     }
 
-    // Botón: ir a Instagram (más información)
-    const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
-    const instaHref = `${INSTAGRAM}?utm_source=web&utm_medium=modal&utm_campaign=bienestar&pro=${encodeURIComponent(key)}`;
+    // Más info (Instagram) – si existe el botón en el HTML
+    if (btnInfo) {
+      const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
+      btnInfo.href = `${INSTAGRAM}?utm_source=web&utm_medium=modal&utm_campaign=bienestar&pro=${encodeURIComponent(key)}`;
+      btnInfo.classList.remove('d-none');
+    }
+
+    // Sacar turno (WhatsApp)
     if (btnTurno) {
-      btnTurno.href = instaHref;
+      btnTurno.href = buildWaUrl('Hola, quisiera consultar por esta especialidad: ' + d.titulo);
       btnTurno.target = '_blank';
       btnTurno.rel = 'noopener';
-      btnTurno.setAttribute('aria-label', 'Abrir Instagram: más información');
-      btnTurno.innerHTML = `<i class="fa-brands fa-instagram me-2" aria-hidden="true"></i>Más info en Instagram`;
+      btnTurno.setAttribute('aria-label', 'Abrir WhatsApp para solicitar turno');
+      btnTurno.innerHTML = `<i class="fa-solid fa-calendar-check me-2" aria-hidden="true"></i>Sacar turno`;
     }
 
     return true;
   };
 
-  /* Método 1: abrir por atributo data-bs-toggle (Bootstrap) */
+  // Método 1: Bootstrap (data-bs-toggle)
   proModalEl.addEventListener('show.bs.modal', (ev) => {
-    const trigger = ev.relatedTarget;
-    const key = trigger?.getAttribute('data-pro');
-    fillProModal(key);
+    try {
+      const trigger = ev.relatedTarget;
+      const key = trigger?.getAttribute('data-pro');
+      fillProModal(key);
+    } catch (e) {
+      console.error('[Bienestar] error en show:', e);
+      showNotice('No se pudo abrir la ventana. Intentalo nuevamente.', 'danger');
+    }
   });
 
-  /* Método 2: abrir por JS si hay data-pro pero sin data-bs-toggle */
+  // Método 2: por JS (si hubiera botones sin data-bs-toggle)
   document.addEventListener('click', (ev) => {
     const el = ev.target.closest('[data-pro]');
     if (!el) return;
-
-    // Si ya tiene data-bs-toggle="modal", dejamos que Bootstrap maneje
     const hasToggle = el.matches('[data-bs-toggle="modal"]') || el.closest('[data-bs-toggle="modal"]');
     if (hasToggle) return;
-
     const key = el.getAttribute('data-pro');
     if (!fillProModal(key)) return;
-
-    // Abrimos modal o mostramos aviso si falta Bootstrap
     if (hasBootstrapModal()) {
-      try {
-        window.bootstrap.Modal.getOrCreateInstance(proModalEl).show();
-      } catch (e) {
-        console.warn('[Bienestar] Error al abrir modal:', e);
-        showNotice('No se pudo abrir la ventana. Intentalo nuevamente.', 'danger');
-      }
+      try { window.bootstrap.Modal.getOrCreateInstance(proModalEl).show(); }
+      catch (e) { console.warn('[Bienestar] Error al abrir modal:', e); showNotice('No se pudo abrir la ventana.', 'danger'); }
     }
   });
 })();
