@@ -632,27 +632,50 @@ const PATOLOGIAS = {
 };
 
 /* =========================================================
-   Modal Bootstrap de “Patologías”
+   Modal Bootstrap de “Patologías” (robusta)
 ========================================================= */
 (() => {
- patoModalEl.addEventListener('show.bs.modal', (event) => {
-  const triggerBtn = event.relatedTarget;
-  const rawKey = (triggerBtn?.getAttribute('data-key') || '');
-  const key = rawKey.trim(); // ← limpia espacios invisibles
-  const d = PATOLOGIAS[key];
+  const patoModalEl = document.getElementById('patoModal');
+  if (!patoModalEl) return;
 
-  if (!key || !d) {
-    console.warn('[Patologías] Clave no encontrada:', JSON.stringify(rawKey));
-    // En caso de error, vaciamos la modal para que no “herede” la anterior:
-    if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
-    if (modalImg) { modalImg.removeAttribute('src'); modalImg.alt = ''; }
-    if (modalBody) modalBody.innerHTML = '<p class="text-muted">No se pudo cargar esta patología.</p>';
-    showNotice('Contenido no disponible para esta patología.', 'warning');
-    return;
-  }
+  const modalTitle   = patoModalEl.querySelector('.modal-title');
+  const modalImg     = document.getElementById('patoImg');
+  const modalBody    = document.getElementById('patoContenido');
+  const btnInsta     = document.getElementById('btnInsta');
+  const btnPatoTurno = document.getElementById('btnPatoTurno');
+
+  // Guardamos la última key clickeada (fallback cuando relatedTarget viene vacío)
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-bs-target="#patoModal"][data-key]');
+    if (btn) patoModalEl.dataset.currentKey = (btn.dataset.key || '').trim();
+  });
+
+  // Limpia siempre para que no “herede” el contenido anterior
+  const resetModal = () => {
+    if (modalTitle) modalTitle.textContent = '';
+    if (modalImg)   { modalImg.removeAttribute('src'); modalImg.alt = ''; }
+    if (modalBody)  modalBody.innerHTML = '<p class="text-muted mb-0">Cargando…</p>';
+  };
+
+  patoModalEl.addEventListener('show.bs.modal', (event) => {
+    resetModal();
+
+    // Tomamos key de relatedTarget o del fallback guardado
+    const triggerBtn = event.relatedTarget;
+    const rawKey = triggerBtn?.getAttribute('data-key') || patoModalEl.dataset.currentKey || '';
+    const key = rawKey.trim();
+    const d = key ? PATOLOGIAS[key] : null;
+
+    if (!d) {
+      console.warn('[Patologías] clave no encontrada:', JSON.stringify(rawKey));
+      if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
+      if (modalBody)  modalBody.innerHTML = '<p class="text-danger mb-0">No se pudo cargar esta patología.</p>';
+      showNotice('Contenido no disponible para esta patología.', 'warning');
+      return;
+    }
 
     if (modalTitle) modalTitle.textContent = d.titulo;
-    if (modalImg) { modalImg.src = d.img; modalImg.alt = d.titulo; }
+    if (modalImg)   { modalImg.src = d.img; modalImg.alt = d.titulo; }
 
     const col = (t, arr) => `
       <div class="col-md-4">
@@ -674,13 +697,12 @@ const PATOLOGIAS = {
     const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
     if (btnInsta) btnInsta.href = `${INSTAGRAM}?utm_source=web&p=${encodeURIComponent(key)}`;
 
-    // Mensaje formal fijo a WhatsApp
-    const turnoMsg =
-      'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
+    const turnoMsg = 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
     const waHref = buildWaUrl(turnoMsg);
     if (btnPatoTurno) btnPatoTurno.href = waHref;
   });
 })();
+
 
 /* =========================================================
    Bienestar / Profesionales: modal dinámica
