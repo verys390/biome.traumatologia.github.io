@@ -635,21 +635,29 @@ const PATOLOGIAS = {
    Modal Bootstrap de “Patologías”
 ========================================================= */
 (() => {
- patoModalEl.addEventListener('show.bs.modal', (event) => {
-  const triggerBtn = event.relatedTarget;
-  const rawKey = (triggerBtn?.getAttribute('data-key') || '');
-  const key = rawKey.trim(); // ← limpia espacios invisibles
-  const d = PATOLOGIAS[key];
+  const patoModalEl = document.getElementById('patoModal');
+  if (!patoModalEl) return; // evita ReferenceError si no está en la página
 
-  if (!key || !d) {
-    console.warn('[Patologías] Clave no encontrada:', JSON.stringify(rawKey));
-    // En caso de error, vaciamos la modal para que no “herede” la anterior:
-    if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
-    if (modalImg) { modalImg.removeAttribute('src'); modalImg.alt = ''; }
-    if (modalBody) modalBody.innerHTML = '<p class="text-muted">No se pudo cargar esta patología.</p>';
-    showNotice('Contenido no disponible para esta patología.', 'warning');
-    return;
-  }
+  const modalTitle   = patoModalEl.querySelector('.modal-title');
+  const modalImg     = document.getElementById('patoImg');
+  const modalBody    = document.getElementById('patoContenido');
+  const btnInsta     = document.getElementById('btnInsta');
+  const btnPatoTurno = document.getElementById('btnPatoTurno');
+
+  patoModalEl.addEventListener('show.bs.modal', (event) => {
+    const triggerBtn = event.relatedTarget;
+    const rawKey = triggerBtn?.getAttribute('data-key') || '';
+    const key = rawKey.trim();                   // limpia espacios invisibles
+    const d = PATOLOGIAS[key];
+
+    if (!key || !d) {
+      console.warn('[Patologías] Clave no encontrada:', JSON.stringify(rawKey));
+      // Limpiar la modal para que no herede contenido anterior
+      if (modalTitle) modalTitle.textContent = 'Contenido no disponible';
+      if (modalImg) { modalImg.removeAttribute('src'); modalImg.alt = ''; }
+      if (modalBody) modalBody.innerHTML = '<p class="text-muted mb-0">No se pudo cargar esta patología.</p>';
+      return;
+    }
 
     if (modalTitle) modalTitle.textContent = d.titulo;
     if (modalImg) { modalImg.src = d.img; modalImg.alt = d.titulo; }
@@ -674,9 +682,7 @@ const PATOLOGIAS = {
     const INSTAGRAM = 'https://www.instagram.com/biome.traumatologia';
     if (btnInsta) btnInsta.href = `${INSTAGRAM}?utm_source=web&p=${encodeURIComponent(key)}`;
 
-    // Mensaje formal fijo a WhatsApp
-    const turnoMsg =
-      'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
+    const turnoMsg = 'Buenos días. Me gustaría solicitar un turno de Traumatología con la Dra. Verónica Gallego. ¿Podrían informarme la próxima disponibilidad?';
     const waHref = buildWaUrl(turnoMsg);
     if (btnPatoTurno) btnPatoTurno.href = waHref;
   });
